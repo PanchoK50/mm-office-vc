@@ -249,13 +249,13 @@ export function ClaimForm({ spotsAvailable }: { spotsAvailable: number }) {
       <button
         type="submit"
         disabled={disabled || isPending}
-        className="flex h-12 w-full items-center justify-center rounded-full bg-accent text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-50 disabled:hover:brightness-100"
+        className="flex h-12 w-full items-center justify-center rounded-sm bg-accent text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-50 disabled:hover:brightness-100"
       >
         {isPending
-          ? "Reserving\u2026"
+          ? "Securing\u2026"
           : disabled
             ? "All spots taken"
-            : "Reserve my space"}
+            : "Secure my space"}
       </button>
     </form>
   );
