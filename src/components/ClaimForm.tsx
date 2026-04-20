@@ -5,7 +5,7 @@ import { submitClaim, type ClaimResult } from "@/app/actions";
 
 const ACCEPTED = ".jpg,.jpeg,.png,.webp,.pdf";
 const MAX_SIZE = 5 * 1024 * 1024;
-const WHATSAPP_NUMBER = "PLACEHOLDER";
+const WHATSAPP_NUMBER = "491608340629";
 
 export function ClaimForm({ spotsAvailable }: { spotsAvailable: number }) {
   const formRef = useRef<HTMLFormElement>(null);
