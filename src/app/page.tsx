@@ -1,9 +1,13 @@
 import Image from "next/image";
 import { HeaderReserveButton } from "@/components/HeaderReserveButton";
+import { OfficethonTimer } from "@/components/OfficethonTimer";
 import { ReserveDialog } from "@/components/ReserveDialog";
 import { SpaceCounter, type SpotStatus } from "@/components/SpaceCounter";
 import { FloatingPaths } from "@/components/ui/background-paths";
-import { createServerClient } from "@/lib/supabase/server";
+import {
+  createOfficethonServerClient,
+  createServerClient,
+} from "@/lib/supabase/server";
 import {
   DEMO_DAY,
   HACK_NATION_POST_ID,
@@ -26,38 +30,65 @@ async function getSpots(): Promise<SpotStatus[]> {
   return data.map((s) => s.status as SpotStatus);
 }
 
+type OfficeDonation = {
+  id: number;
+  donor_name: string;
+  amount: number;
+  generation: string | null;
+  created_at: string;
+};
+
+async function getOfficeDonations(): Promise<{
+  total: number;
+  recent: OfficeDonation[];
+}> {
+  const supabase = createOfficethonServerClient();
+  const { data } = await supabase
+    .from("donations")
+    .select("id, donor_name, amount, generation, created_at, status")
+    .neq("status", "rejected")
+    .order("created_at", { ascending: false });
+
+  const list = (data ?? []) as (OfficeDonation & { status: string })[];
+  const total = list.reduce((sum, d) => sum + (d.amount ?? 0), 0);
+  return { total, recent: list.slice(0, 5) };
+}
+
 export default async function Home() {
-  const spots = await getSpots();
+  const [spots, office] = await Promise.all([getSpots(), getOfficeDonations()]);
   const spotsAvailable = spots.filter((s) => s === "open").length;
 
   const price = PRICE_PER_SPACE.toLocaleString("de-DE");
+  const officeTotal = office.total.toLocaleString("de-DE");
 
   return (
     <>
       {/* ——— Nav ——— */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-hairline bg-bg">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
-          <a
-            href="#top"
-            className="flex items-center gap-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg rounded"
-            aria-label="Manage and More Incubator"
-          >
-            <Image
-              src="/MM_3.png"
-              alt="Manage and More"
-              width={1181}
-              height={413}
-              priority
-              className="h-12 w-auto sm:h-14"
-            />
-            <span
-              aria-hidden="true"
-              className="hidden font-mono text-[11px] uppercase tracking-[0.22em] text-muted sm:inline"
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-hairline bg-bg lg:pr-[440px]">
+        <div className="px-6">
+          <div className="mx-auto flex h-20 w-full max-w-5xl items-center justify-between">
+            <a
+              href="#top"
+              className="flex items-center gap-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg rounded"
+              aria-label="Manage and More Incubator"
             >
-              <span className="text-accent">·</span>&nbsp;Incubator
-            </span>
-          </a>
-          <HeaderReserveButton />
+              <Image
+                src="/MM_3.png"
+                alt="Manage and More"
+                width={1181}
+                height={413}
+                priority
+                className="h-12 w-auto sm:h-14"
+              />
+              <span
+                aria-hidden="true"
+                className="hidden font-mono text-[11px] uppercase tracking-[0.22em] text-muted sm:inline"
+              >
+                <span className="text-accent">·</span>&nbsp;Incubator
+              </span>
+            </a>
+            <HeaderReserveButton />
+          </div>
         </div>
       </header>
 
@@ -90,6 +121,93 @@ export default async function Home() {
  
  
 
+        {/* ——— Officethon ——— */}
+        <section className="border-t border-hairline bg-surface/40 px-6 py-24 sm:py-28">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+                  Officethon · Live
+                </p>
+                <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
+                  Our community is funding the office{" "}
+                  <span className="text-muted">in real time.</span>
+                </h2>
+              </div>
+              <a
+                href="https://officethon.mm-app.de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 items-center justify-center gap-2 self-start rounded-md border border-hairline-strong bg-surface-2 px-5 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+              >
+                officethon.mm-app.de
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+
+            <div className="grid gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline lg:grid-cols-[1fr_1.2fr]">
+              <div className="flex flex-col justify-between gap-10 bg-surface p-8 sm:p-10 lg:p-12">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
+                    Total raised for the office
+                  </p>
+                  <p className="mt-6 flex items-baseline gap-2">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+                      €
+                    </span>
+                    <span className="text-[44px] font-medium leading-none tracking-[-0.03em] text-fg sm:text-6xl">
+                      {officeTotal}
+                    </span>
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
+                    Live since 19.04. · 13:00
+                  </p>
+                  <div className="mt-4">
+                    <OfficethonTimer />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
+                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
+                  Neuste Spenden
+                </p>
+                {office.recent.length === 0 ? (
+                  <p className="text-[15px] leading-[1.55] text-muted">
+                    Noch keine Spenden — sei der Erste.
+                  </p>
+                ) : (
+                  <ul className="divide-y divide-hairline">
+                    {office.recent.map((d) => (
+                      <li
+                        key={d.id}
+                        className="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0"
+                      >
+                        <div className="min-w-0">
+                          <p className="truncate text-[15px] font-medium text-fg">
+                            {d.donor_name || "Anonym"}
+                          </p>
+                          {d.generation ? (
+                            <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+                              {d.generation}
+                            </p>
+                          ) : null}
+                        </div>
+                        <span className="font-mono text-base font-medium tabular-nums text-accent sm:text-lg">
+                          €{d.amount.toLocaleString("de-DE")}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ——— What you get ——— */}
         <section className="px-6 py-28 sm:py-36">
           <div className="mx-auto max-w-6xl">
@@ -118,9 +236,6 @@ export default async function Home() {
 
             <ul className="grid gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline md:grid-cols-3">
               <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
-                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
-                  01 — Plaque
-                </span>
                 <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
                   A named plaque on the space.
                 </p>
@@ -129,9 +244,6 @@ export default async function Home() {
                 </p>
               </li>
               <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
-                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
-                  02 — Demo Day
-                </span>
                 <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
                   Demo Day access.
                 </p>
@@ -141,9 +253,6 @@ export default async function Home() {
                 </p>
               </li>
               <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
-                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
-                  03 — Hack Nation
-                </span>
                 <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
                   Hackathon access.
                 </p>
@@ -152,7 +261,44 @@ export default async function Home() {
                   Start2 / CDTM office.
                 </p>
               </li>
+              <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
+                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
+                  Fixed spot of your Fund in our curriculum.
+                </p>
+                <p className="mt-auto text-[15px] leading-[1.55] text-muted">
+                  You will meet every new MM scholar at least once.
+                </p>
+              </li>
             </ul>
+          </div>
+        </section>
+
+        {/* ——— Floor plan ——— */}
+        <section className="border-t border-hairline bg-surface/30 px-6 py-28 sm:py-36">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-12 max-w-3xl">
+              <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+                Floor plan
+              </p>
+              <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
+                The incubator,{" "}
+                <span className="text-muted">from above.</span>
+              </h2>
+              <p className="mt-6 text-lg leading-[1.55] text-muted">
+                Four named spaces, shared kitchen, meeting room — laid out for the
+                teams moving in.
+              </p>
+            </div>
+
+            <div className="overflow-hidden rounded-3xl border border-hairline bg-surface p-4 sm:p-8">
+              <Image
+                src="/Incuabtion.png"
+                alt="Incubator floor plan"
+                width={2229}
+                height={1146}
+                className="h-auto w-full rounded-xl"
+              />
+            </div>
           </div>
         </section>
 
