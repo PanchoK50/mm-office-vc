@@ -98,9 +98,24 @@ body {
   background: var(--bg);
 }
 
-/* Make the form stack into one column inside the narrow panel */
+/* Keep the form stacked in one column inside the narrow side panel */
 .reserve-panel form .sm\:grid-cols-2 {
   grid-template-columns: 1fr;
+}
+
+/* lg+: float the panel to the right of a notional 1440px container,
+   pinned to the viewport so it moves with the scroll. */
+@media (min-width: 1024px) {
+  .reserve-panel {
+    position: fixed;
+    top: 6rem;
+    right: 1rem;
+    z-index: 30;
+    width: 400px;
+    max-height: calc(100vh - 7.5rem);
+    overflow-y: auto;
+    margin: 0;
+  }
 }
 
 .grain::before {

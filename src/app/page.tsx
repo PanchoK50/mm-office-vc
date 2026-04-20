@@ -1,12 +1,10 @@
 import Image from "next/image";
-import { CopyButton } from "@/components/CopyButton";
-import { ClaimForm } from "@/components/ClaimForm";
 import { HeaderReserveButton } from "@/components/HeaderReserveButton";
+import { ReserveDialog } from "@/components/ReserveDialog";
 import { SpaceCounter, type SpotStatus } from "@/components/SpaceCounter";
 import { FloatingPaths } from "@/components/ui/background-paths";
 import { createServerClient } from "@/lib/supabase/server";
 import {
-  BANK_DETAILS,
   DEMO_DAY,
   HACK_NATION_POST_ID,
   JOINERS,
@@ -63,7 +61,7 @@ export default async function Home() {
         </div>
       </header>
 
-      <main id="top" className="flex flex-col">
+      <main id="top" className="relative flex flex-col lg:pr-[440px]">
         {/* ——— Hero ——— */}
         <section className="relative isolate flex min-h-screen flex-col justify-center overflow-hidden px-6 pb-28 pt-32 sm:pt-36 lg:pt-40 grain">
           <div className="mesh absolute inset-0 -z-10" aria-hidden="true" />
@@ -85,12 +83,6 @@ export default async function Home() {
               Manage and More is opening an office, and our best startups will move in.
             </p>
             <div className="fade-up-slower mt-12 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a
-                href="#reserve"
-                className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-6 text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-              >
-                Secure a space for €{price}
-              </a>
             </div>
           </div>
         </section>
@@ -186,7 +178,7 @@ export default async function Home() {
                     <h3 className="text-lg font-medium tracking-tight text-fg">
                       {w.name}
                     </h3>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
+                    <span className="font-mono text-2xl font-medium uppercase tracking-[0.08em] text-accent sm:text-3xl">
                       {w.tag}
                     </span>
                   </div>
@@ -430,67 +422,6 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* ——— Final CTA / Reserve ——— */}
-        <section
-          id="reserve"
-          className="scroll-mt-20 border-t border-hairline px-6 py-28 sm:py-36"
-        >
-          <div className="mx-auto max-w-6xl">
-            <div className="mx-auto mb-16 max-w-3xl text-center">
-              <h2 className="text-balance text-5xl font-medium leading-[1.02] tracking-[-0.025em] sm:text-6xl">
-                Four spaces.
-                <br />
-                <span className="text-muted">One wire transfer away.</span>
-              </h2>
-              <p className="mt-8 text-balance text-2xl font-medium leading-[1.3] tracking-[-0.01em] text-fg sm:text-3xl">
-                <span className="text-accent">€{price}</span> per space. Your
-                spot is assigned{" "}
-                <span className="text-muted">
-                  the moment the wire lands.
-                </span>
-              </p>
-            </div>
-
-            <div className="overflow-hidden rounded-3xl border border-hairline bg-surface">
-              <div className="p-8 sm:p-10 lg:p-14">
-                <SpaceCounter spots={spots} />
-              </div>
-
-              {/* Bank details */}
-              <div className="border-t border-hairline bg-bg/60 p-8 sm:p-10 lg:p-14">
-                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-                  Wire details
-                </p>
-                <div className="mt-6 divide-y divide-hairline">
-                  <BankRow
-                    label="Recipient"
-                    value={BANK_DETAILS.recipient}
-                  />
-                  <BankRow label="IBAN" value={BANK_DETAILS.iban} mono />
-                  <BankRow label="BIC" value={BANK_DETAILS.bic} mono />
-                  <BankRow label="Bank" value={BANK_DETAILS.bank} />
-                </div>
-              </div>
-
-              {/* Claim form */}
-              <div className="border-t border-hairline p-8 sm:p-10 lg:p-14">
-                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
-                  Confirm your transfer
-                </p>
-                <p className="mt-3 mb-8 text-sm leading-[1.6] text-muted">
-                  Wired the money? Upload your payment confirmation below to
-                  reserve your spot instantly.
-                </p>
-                <ClaimForm spotsAvailable={spotsAvailable} />
-              </div>
-            </div>
-
-            <p className="mt-8 text-center text-sm leading-[1.6] text-muted">
-              No forms up front. The transferred money is the confirmation.
-            </p>
-          </div>
-        </section>
-
         {/* ——— Footer ——— */}
         <footer className="border-t border-hairline px-6 py-10">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
@@ -532,6 +463,56 @@ export default async function Home() {
           </div>
         </footer>
       </main>
+
+      {/* ——— Reserve side panel (hovering on lg+, inline on mobile) ——— */}
+      <aside
+        id="reserve"
+        aria-label="Reserve a space"
+        className="reserve-panel scroll-mt-24 mx-6 mb-20 mt-4 overflow-hidden rounded-3xl border border-black/10 bg-white shadow-[0_24px_70px_-24px_rgba(0,0,0,0.45)]"
+      >
+        <div className="relative p-7 pb-6 sm:p-9 sm:pb-7">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"
+          />
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70 opacity-60" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+            </span>
+            Reservation open
+          </div>
+
+          <h2 className="mt-5 text-balance text-[26px] font-medium leading-[1.1] tracking-[-0.02em] text-fg sm:text-[28px]">
+            Four spaces.{" "}
+            <span className="text-muted">One wire transfer away.</span>
+          </h2>
+
+          <div className="mt-6 flex items-baseline gap-2">
+            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+              €
+            </span>
+            <span className="text-[44px] font-medium leading-none tracking-[-0.03em] text-fg sm:text-5xl">
+              {price}
+            </span>
+            <span className="text-sm text-muted">/ space</span>
+          </div>
+          <p className="mt-3 text-[13.5px] leading-[1.55] text-muted">
+            Your spot is assigned the moment the wire lands.
+          </p>
+        </div>
+
+        <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
+          <SpaceCounter spots={spots} compact />
+        </div>
+
+        <div className="border-t border-hairline bg-surface-2/60 px-7 py-6 sm:px-9 sm:py-7">
+          <ReserveDialog spotsAvailable={spotsAvailable} price={price} />
+          <p className="mt-4 text-center text-[11px] leading-[1.55] text-muted">
+            No forms up front. The wire is the confirmation.
+          </p>
+        </div>
+      </aside>
     </>
   );
 }
@@ -582,35 +563,3 @@ function Dot() {
   );
 }
 
-function BankRow({
-  label,
-  value,
-  mono,
-  hint,
-}: {
-  label: string;
-  value: string;
-  mono?: boolean;
-  hint?: string;
-}) {
-  return (
-    <div className="flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted sm:w-32">
-        {label}
-      </span>
-      <div className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-4">
-        <span
-          className={`break-all text-fg ${mono ? "font-mono text-[15px] tracking-wide" : "text-[16px]"}`}
-        >
-          {value}
-        </span>
-        <CopyButton value={value} label={label} />
-      </div>
-      {hint ? (
-        <p className="mt-1 text-xs leading-[1.55] text-muted sm:mt-2 sm:w-full sm:text-right">
-          {hint}
-        </p>
-      ) : null}
-    </div>
-  );
-}
