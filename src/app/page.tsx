@@ -87,9 +87,22 @@ export default function Home() {
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 max-w-3xl">
               <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-                €7,500 per space. Four spaces. Your spot is assigned the moment
-                the wire lands.
+                We&rsquo;re building an incubator{" "}
+                <span className="text-muted">for our best startups.</span>
               </h2>
+              <p className="mt-6 text-lg leading-[1.55] text-muted">
+                Office space in Munich&rsquo;s best location, free for
+                the teams we back, so they can accelerate without the overhead.
+              </p>
+             
+              <p className="mt-8 text-balance text-2xl font-medium leading-[1.3] tracking-[-0.01em] text-fg sm:text-3xl">
+                <span className="text-accent">€{price}</span> per space.{" "}
+                <span className="text-accent">Four</span> spaces. Your spot is
+                assigned{" "}
+                <span className="text-muted">
+                  the moment the wire lands.
+                </span>
+              </p>
             </div>
 
             <div className="overflow-hidden rounded-3xl border border-hairline bg-surface">
