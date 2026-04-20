@@ -98,10 +98,13 @@ export default async function Home() {
  
  
 
-        {/* ——— The Ask ——— */}
-        <section id="reserve" className="px-6 py-28 sm:py-36 scroll-mt-20">
+        {/* ——— What you get ——— */}
+        <section className="px-6 py-28 sm:py-36">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 max-w-3xl">
+              <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+                What you get
+              </p>
               <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
                 We&rsquo;re building an incubator{" "}
                 <span className="text-muted">for our best startups.</span>
@@ -110,7 +113,7 @@ export default async function Home() {
                 Office space in Munich&rsquo;s best location, free for
                 the teams we back, so they can accelerate without the overhead.
               </p>
-             
+
               <p className="mt-8 text-balance text-2xl font-medium leading-[1.3] tracking-[-0.01em] text-fg sm:text-3xl">
                 <span className="text-accent">€{price}</span> per space.{" "}
                 <span className="text-accent">Four</span> spaces. Your spot is
@@ -121,64 +124,43 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="overflow-hidden rounded-3xl border border-hairline bg-surface">
-              <div className="grid gap-10 p-8 sm:p-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:p-14">
-                <div className="flex flex-col justify-between gap-10">
-                  <div>
-                    <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-                      What you get
-                    </p>
-                    <ul className="mt-6 space-y-4 text-[17px] leading-[1.55] text-fg/90">
-                      <li className="flex gap-3">
-                        <Dot /> A named plaque on the space. For one Year.
-                      </li>
-                      <li className="flex gap-3">
-                        <Dot /> Demo Day access; New generation teams, Startup Projects and alumni pitches.
-                      </li>
-                      <li className="flex gap-3">
-                        <Dot /> Access to our Hackathons currently in cooperation with Hacknation at Start2 / CDTM office.
-                      </li>
-                      
-                    </ul>
-                  </div>
-                  <p className="text-sm leading-[1.6] text-muted">
-                    No forms. The transfered Money is the confirmaiton. 
-                  </p>
-                </div>
-
-                <div className="flex flex-col justify-center">
-                  <SpaceCounter spots={spots} />
-                </div>
-              </div>
-
-              {/* Bank details */}
-              <div className="border-t border-hairline bg-bg/60 p-8 sm:p-10 lg:p-14">
-                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-                  Wire details
+            <ul className="grid gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline md:grid-cols-3">
+              <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
+                  01 — Plaque
+                </span>
+                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
+                  A named plaque on the space.
                 </p>
-                <div className="mt-6 divide-y divide-hairline">
-                  <BankRow
-                    label="Recipient"
-                    value={BANK_DETAILS.recipient}
-                  />
-                  <BankRow label="IBAN" value={BANK_DETAILS.iban} mono />
-                  <BankRow label="BIC" value={BANK_DETAILS.bic} mono />
-                  <BankRow label="Bank" value={BANK_DETAILS.bank} />
-                </div>
-              </div>
-
-              {/* Claim form */}
-              <div className="border-t border-hairline p-8 sm:p-10 lg:p-14">
-                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
-                  Confirm your transfer
+                <p className="mt-auto text-[15px] leading-[1.55] text-muted">
+                  Mounted for one year. Your name on the hub.
                 </p>
-                <p className="mt-3 mb-8 text-sm leading-[1.6] text-muted">
-                  Wired the money? Upload your payment confirmation below to
-                  reserve your spot instantly.
+              </li>
+              <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
+                  02 — Demo Day
+                </span>
+                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
+                  Demo Day access.
                 </p>
-                <ClaimForm spotsAvailable={spotsAvailable} />
-              </div>
-            </div>
+                <p className="mt-auto text-[15px] leading-[1.55] text-muted">
+                  New-generation teams, Startup Projects and alumni pitches —
+                  first look at the pipeline.
+                </p>
+              </li>
+              <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
+                  03 — Hack Nation
+                </span>
+                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
+                  Hackathon access.
+                </p>
+                <p className="mt-auto text-[15px] leading-[1.55] text-muted">
+                  Currently in cooperation with Hacknation at the
+                  Start2 / CDTM office.
+                </p>
+              </li>
+            </ul>
           </div>
         </section>
 
@@ -338,7 +320,7 @@ export default async function Home() {
               <div className="flex flex-col gap-6 bg-surface p-10">
                 <div className="flex items-baseline justify-between">
                   <h3 className="text-2xl font-medium tracking-tight">
-                    Hack Nation
+                    Hackathon
                   </h3>
                 </div>
                 <p className="text-[15px] leading-[1.55] text-fg">
@@ -374,8 +356,7 @@ export default async function Home() {
                   Prime location for the next founding hub
                 </p>
                 <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-                  Where you&rsquo;ll find{" "}
-                  <span className="text-muted">your plaque.</span>
+                 Where we are.
                 </h2>
               </div>
             
@@ -449,23 +430,64 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* ——— Final CTA ——— */}
-        <section className="border-t border-hairline px-6 py-32">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="mt-6 text-balance text-5xl font-medium leading-[1.02] tracking-[-0.025em] sm:text-6xl">
-              Four spaces.
-              <br />
-              <span className="text-muted">One wire transfer away.</span>
-            </h2>
-            <div className="mx-auto mt-14 max-w-md">
-              <SpaceCounter spots={spots} compact />
+        {/* ——— Final CTA / Reserve ——— */}
+        <section
+          id="reserve"
+          className="scroll-mt-20 border-t border-hairline px-6 py-28 sm:py-36"
+        >
+          <div className="mx-auto max-w-6xl">
+            <div className="mx-auto mb-16 max-w-3xl text-center">
+              <h2 className="text-balance text-5xl font-medium leading-[1.02] tracking-[-0.025em] sm:text-6xl">
+                Four spaces.
+                <br />
+                <span className="text-muted">One wire transfer away.</span>
+              </h2>
+              <p className="mt-8 text-balance text-2xl font-medium leading-[1.3] tracking-[-0.01em] text-fg sm:text-3xl">
+                <span className="text-accent">€{price}</span> per space. Your
+                spot is assigned{" "}
+                <span className="text-muted">
+                  the moment the wire lands.
+                </span>
+              </p>
             </div>
-            <a
-              href="#reserve"
-              className="mt-12 inline-flex h-12 items-center justify-center rounded-md bg-accent px-7 text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-            >
-              Secure a space for €{price}
-            </a>
+
+            <div className="overflow-hidden rounded-3xl border border-hairline bg-surface">
+              <div className="p-8 sm:p-10 lg:p-14">
+                <SpaceCounter spots={spots} />
+              </div>
+
+              {/* Bank details */}
+              <div className="border-t border-hairline bg-bg/60 p-8 sm:p-10 lg:p-14">
+                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
+                  Wire details
+                </p>
+                <div className="mt-6 divide-y divide-hairline">
+                  <BankRow
+                    label="Recipient"
+                    value={BANK_DETAILS.recipient}
+                  />
+                  <BankRow label="IBAN" value={BANK_DETAILS.iban} mono />
+                  <BankRow label="BIC" value={BANK_DETAILS.bic} mono />
+                  <BankRow label="Bank" value={BANK_DETAILS.bank} />
+                </div>
+              </div>
+
+              {/* Claim form */}
+              <div className="border-t border-hairline p-8 sm:p-10 lg:p-14">
+                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+                  Confirm your transfer
+                </p>
+                <p className="mt-3 mb-8 text-sm leading-[1.6] text-muted">
+                  Wired the money? Upload your payment confirmation below to
+                  reserve your spot instantly.
+                </p>
+                <ClaimForm spotsAvailable={spotsAvailable} />
+              </div>
+            </div>
+
+            <p className="mt-8 text-center text-sm leading-[1.6] text-muted">
+              No forms up front. The transferred money is the confirmation.
+            </p>
           </div>
         </section>
 
