@@ -19,6 +19,7 @@ export const JOINERS: Array<{
   tag: string;
   line: string;
   image: string;
+  logo: string;
   linkedin: JoinerProfile | JoinerPost;
 }> = [
   {
@@ -26,6 +27,7 @@ export const JOINERS: Array<{
     tag: "Pairio · YC P26",
     line: "Just got into YC with Pairio (P26).",
     image: "/matze.jpeg",
+    logo: "/Y_Combinator_logo.svg",
     linkedin: {
       kind: "profile",
       url: "https://www.linkedin.com/in/matthias-wolf/",
@@ -36,6 +38,7 @@ export const JOINERS: Array<{
     tag: "EWOR",
     line: "EWOR Fellow",
     image: "/henry.jpeg",
+    logo: "/ewor.avif",
     linkedin: {
       kind: "profile",
       url: "https://www.linkedin.com/in/henryweigt/",
@@ -46,18 +49,22 @@ export const JOINERS: Array<{
     tag: "Y Combinator",
     line: "Recently into YC.",
     image: "/almo.jpeg",
+    logo: "/Y_Combinator_logo.svg",
     linkedin: {
       kind: "profile",
       url: "https://www.linkedin.com/in/almo-sutedjo/",
     },
   },
-
   {
     name: "Jochen Madler",
     tag: "YC · Sitefire",
-    line: "Building Sitefire through Y Combinator, a candidate to move into the incubator.",
+    line: "Building Sitefire through Y Combinator, a candidate to move into the Incubator.",
     image: "/jochen.jpeg",
-    linkedin: { kind: "post", postId: "7435006185210249216" },
+    logo: "/Y_Combinator_logo.svg",
+    linkedin: {
+      kind: "profile",
+      url: "https://www.linkedin.com/in/jochen-madler/",
+    },
   },
 ];
 
