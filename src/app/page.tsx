@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CopyButton } from "@/components/CopyButton";
 import { SpaceCounter } from "@/components/SpaceCounter";
+import { FloatingPaths } from "@/components/ui/background-paths";
 import {
   BANK_DETAILS,
   DEMO_DAY,
@@ -20,7 +21,7 @@ export default function Home() {
     <>
       {/* ——— Nav ——— */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-hairline bg-bg/70 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
           <a
             href="#top"
             className="flex items-center gap-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg rounded"
@@ -32,7 +33,7 @@ export default function Home() {
               width={1181}
               height={413}
               priority
-              className="h-7 w-auto"
+              className="h-12 w-auto sm:h-14"
             />
             <span
               aria-hidden="true"
@@ -54,19 +55,23 @@ export default function Home() {
         {/* ——— Hero ——— */}
         <section className="relative isolate overflow-hidden px-6 pb-28 pt-40 sm:pt-48 lg:pt-56 grain">
           <div className="mesh absolute inset-0 -z-10" aria-hidden="true" />
+          <div
+            className="absolute inset-0 -z-10 rotate-180 opacity-60"
+            aria-hidden="true"
+          >
+            <FloatingPaths position={1} />
+            <FloatingPaths position={-1} />
+          </div>
           <div className="mx-auto max-w-5xl">
-            <p className="fade-up font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-              <span className="text-accent">●</span>&nbsp;&nbsp;An incubator, finally.
-            </p>
+            
             <h1 className="fade-up-slow mt-8 text-balance text-[clamp(2.75rem,8.5vw,6.75rem)] font-medium leading-[0.95] tracking-[-0.03em] text-fg">
               For years, we said MM had
               <br className="hidden sm:block" />{" "}
               <span className="text-muted">so much</span> potential.
             </h1>
             <p className="fade-up-slower mt-8 max-w-[54ch] text-balance text-lg leading-[1.55] text-muted sm:text-xl">
-              This month, it stopped being potential. We&rsquo;re opening a
-              physical incubator for Manage &amp; More&rsquo;s best founding
-              teams — and we&rsquo;re funding it before the semester ends.
+              We&rsquo;re opening the first office for Manage &amp; More&rsquo;, and are bringing the best founding
+              teams together. 
             </p>
             <div className="fade-up-slower mt-12 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
@@ -196,18 +201,12 @@ export default function Home() {
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
-                  Recent wins · 2026
-                </p>
                 <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
                   MM alumni closed rounds{" "}
-                  <span className="text-muted">this year.</span>
+                  <span className="text-muted">in the last 3 months.</span>
                 </h2>
               </div>
-              <p className="max-w-sm text-sm leading-[1.6] text-muted">
-                The network isn&rsquo;t theoretical. Four raises in the last
-                twelve months — a16z to bootstrapped operators.
-              </p>
+              
             </div>
             <ul className="grid gap-6 sm:grid-cols-2">
               {RECENT_WINS.map((w) => (

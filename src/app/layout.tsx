@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "M&M Incubator — Reserve a space",
+  title: "MM Incubator",
   description:
     "For years, we said Manage & More had so much potential. This month, it stopped being potential. Four spaces. €7,500 each. Direct wire. Spot assigned instantly.",
 };
