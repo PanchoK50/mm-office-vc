@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { CopyButton } from "@/components/CopyButton";
+import { ClaimForm } from "@/components/ClaimForm";
 import { HeaderReserveButton } from "@/components/HeaderReserveButton";
-import { SpaceCounter } from "@/components/SpaceCounter";
+import { SpaceCounter, type SpotStatus } from "@/components/SpaceCounter";
 import { FloatingPaths } from "@/components/ui/background-paths";
+import { createServerClient } from "@/lib/supabase/server";
 import {
   BANK_DETAILS,
   DEMO_DAY,
@@ -10,13 +12,27 @@ import {
   JOINERS,
   PRICE_PER_SPACE,
   RECENT_WINS,
-  SPACES_FILLED,
   SPACES_TOTAL,
 } from "@/content/data";
 
-export default function Home() {
+export const revalidate = 30;
+
+async function getSpots(): Promise<SpotStatus[]> {
+  const supabase = createServerClient();
+  const { data } = await supabase
+    .from("spots")
+    .select("id, status")
+    .order("id");
+
+  if (!data) return Array.from({ length: SPACES_TOTAL }, () => "open" as const);
+  return data.map((s) => s.status as SpotStatus);
+}
+
+export default async function Home() {
+  const spots = await getSpots();
+  const spotsAvailable = spots.filter((s) => s === "open").length;
+
   const price = PRICE_PER_SPACE.toLocaleString("de-DE");
-  const totalRaise = (PRICE_PER_SPACE * SPACES_TOTAL).toLocaleString("de-DE");
 
   return (
     <>
@@ -131,7 +147,7 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col justify-center">
-                  <SpaceCounter />
+                  <SpaceCounter spots={spots} />
                 </div>
               </div>
 
@@ -149,6 +165,18 @@ export default function Home() {
                   <BankRow label="BIC" value={BANK_DETAILS.bic} mono />
                   <BankRow label="Bank" value={BANK_DETAILS.bank} />
                 </div>
+              </div>
+
+              {/* Claim form */}
+              <div className="border-t border-hairline p-8 sm:p-10 lg:p-14">
+                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+                  Confirm your transfer
+                </p>
+                <p className="mt-3 mb-8 text-sm leading-[1.6] text-muted">
+                  Wired the money? Upload your payment confirmation below to
+                  reserve your spot instantly.
+                </p>
+                <ClaimForm spotsAvailable={spotsAvailable} />
               </div>
             </div>
           </div>
@@ -430,7 +458,7 @@ export default function Home() {
               <span className="text-muted">One wire transfer away.</span>
             </h2>
             <div className="mx-auto mt-14 max-w-md">
-              <SpaceCounter compact />
+              <SpaceCounter spots={spots} compact />
             </div>
             <a
               href="#reserve"
