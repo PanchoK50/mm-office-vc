@@ -85,6 +85,24 @@ body {
   }
 }
 
+.reserve-panel {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f6f6f8;
+  --fg: #0b0b0f;
+  --muted: #5f5f68;
+  --hairline: rgba(10, 10, 15, 0.09);
+  --hairline-strong: rgba(10, 10, 15, 0.22);
+  color: var(--fg);
+  background: var(--bg);
+}
+
+/* Make the form stack into one column inside the narrow panel */
+.reserve-panel form .sm\:grid-cols-2 {
+  grid-template-columns: 1fr;
+}
+
 .grain::before {
   content: "";
   position: absolute;
