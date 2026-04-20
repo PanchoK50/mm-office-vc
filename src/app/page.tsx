@@ -25,7 +25,7 @@ export default function Home() {
           <a
             href="#top"
             className="flex items-center gap-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg rounded"
-            aria-label="Manage and More — Incubator"
+            aria-label="Manage and More Incubator"
           >
             <Image
               src="/MM_3.png"
@@ -65,20 +65,19 @@ export default function Home() {
           <div className="mx-auto max-w-5xl">
             
             <h1 className="fade-up-slow mt-8 text-balance text-[clamp(2.75rem,8.5vw,6.75rem)] font-medium leading-[0.95] tracking-[-0.03em] text-fg">
-              For years, we said MM had
+              Be visible in Munich&rsquo;s
               <br className="hidden sm:block" />{" "}
-              <span className="text-muted">so much</span> potential.
+              <span className="text-muted">next hub</span> for startups.
             </h1>
             <p className="fade-up-slower mt-8 max-w-[54ch] text-balance text-lg leading-[1.55] text-muted sm:text-xl">
-              We&rsquo;re opening the first office for Manage &amp; More&rsquo;, and are bringing the best founding
-              teams together. 
+              Manage &amp; More is opening an office, and our best startups will move in.
             </p>
             <div className="fade-up-slower mt-12 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
                 href="#reserve"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-6 text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+                className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-6 text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
               >
-                Reserve a space — €{price}
+                Reserve a space for €{price}
               </a>
               <a
                 href="#plan"
@@ -91,44 +90,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ——— Traction strip ——— */}
-        <section
-          id="plan"
-          className="border-y border-hairline bg-surface/40 px-6 py-20 sm:py-24"
-        >
-          <div className="mx-auto max-w-6xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-              Momentum&nbsp;&nbsp;·&nbsp;&nbsp;April 2026
-            </p>
-            <p className="mt-6 max-w-[52ch] text-balance text-2xl font-medium leading-[1.25] tracking-tight text-fg sm:text-[28px]">
-              In the last 48 hours, we funded our active generation&rsquo;s
-              space.{" "}
-              <span className="text-muted">
-                Now we&rsquo;re building the incubator.
-              </span>
-            </p>
-            <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline sm:grid-cols-3">
-              <Metric value="48h" label="To fund the first space" />
-              <Metric
-                value={`€${totalRaise}`}
-                label="Target — 4 spaces × €7,500"
-              />
-              <Metric
-                value={`${SPACES_FILLED}/${SPACES_TOTAL}`}
-                label="Incubator spaces funded"
-                accent
-              />
-            </div>
-          </div>
-        </section>
+ 
+ 
 
         {/* ——— The Ask ——— */}
         <section id="reserve" className="px-6 py-28 sm:py-36 scroll-mt-20">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
-                The ask
-              </p>
               <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
                 €7,500 per space. Four spaces. Your spot is assigned the moment
                 the wire lands.
@@ -151,11 +119,10 @@ export default function Home() {
                         alumni pitches.
                       </li>
                       <li className="flex gap-3">
-                        <Dot /> Hack Nation investor access (Start2 / CDTM
-                        office).
+                        <Dot /> Access to our Hackathons currently in cooperation with Hacknation at Start2 / CDTM office.
                       </li>
                       <li className="flex gap-3">
-                        <Dot /> A named plaque on the space. Permanently.
+                        <Dot /> A named plaque on the space. For one Year.
                       </li>
                     </ul>
                   </div>
@@ -238,7 +205,7 @@ export default function Home() {
             <div className="mb-16 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-                  Who moves in
+                  Who could move in
                 </p>
                 <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
                   The teams you&rsquo;d meet on day one.
@@ -246,7 +213,15 @@ export default function Home() {
               </div>
               <p className="max-w-sm text-sm leading-[1.6] text-muted">
                 Active generations are already shipping — EWOR, Y Combinator,
-                and independent labs. The incubator is where they&rsquo;d sit.
+                and independent labs. The incubator is where they&rsquo;d sit.{" "}
+                <a
+                  href="https://www.manageandmore.de/people/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fg underline decoration-hairline-strong underline-offset-4 transition hover:text-accent hover:decoration-accent"
+                >
+                  See our active generations ↗
+                </a>
               </p>
             </div>
             <ul className="grid gap-6 md:grid-cols-3">
@@ -291,13 +266,10 @@ export default function Home() {
         {/* ——— Access pull-quote ——— */}
         <section className="px-6 py-28">
           <div className="mx-auto max-w-4xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-              Why now
-            </p>
+            
             <blockquote className="mt-8 border-l-2 border-accent pl-8 text-balance text-3xl font-medium leading-[1.2] tracking-tight text-fg sm:text-4xl sm:leading-[1.15]">
-              Until now, only Unternehmertum founders had physical incubator
-              access in Munich.{" "}
-              <span className="text-muted">This opens it — to MM.</span>
+              Until now, only Unternehmertum had early access.{" "}
+              
             </blockquote>
           </div>
         </section>
@@ -319,9 +291,7 @@ export default function Home() {
                   <h3 className="text-2xl font-medium tracking-tight">
                     Demo Day
                   </h3>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-                    One evening · Semester close
-                  </span>
+                
                 </div>
                 <ol className="space-y-5">
                   {DEMO_DAY.map((d, i) => (
@@ -341,10 +311,6 @@ export default function Home() {
                     </li>
                   ))}
                 </ol>
-                <p className="mt-auto text-sm leading-[1.6] text-muted">
-                  Seated access, plus a pre-event founder dinner with the top
-                  teams.
-                </p>
               </div>
 
               {/* Hack Nation */}
@@ -353,14 +319,11 @@ export default function Home() {
                   <h3 className="text-2xl font-medium tracking-tight">
                     Hack Nation
                   </h3>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-                    48h · Start2 / CDTM
-                  </span>
                 </div>
                 <p className="text-[15px] leading-[1.55] text-fg">
                   Our hackathon, currently hosted at the{" "}
                   <span className="text-accent">Start2 / CDTM office</span>.
-                  You&rsquo;d walk in alongside the teams.
+                  Now hosted at our own office and open if you invest.
                 </p>
                 <ul className="space-y-2 text-sm text-muted">
                   <li className="flex items-center gap-3">

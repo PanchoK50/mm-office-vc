@@ -22,8 +22,8 @@ export const JOINERS: Array<{
 }> = [
   {
     name: "Matthias Wolf",
-    tag: "Y Combinator",
-    line: "Just out of YC — proof that MM pipelines straight into the top of the funnel.",
+    tag: "Pairio · YC P26",
+    line: "Just got into YC with Pairio (P26).",
     linkedin: {
       kind: "profile",
       url: "https://www.linkedin.com/in/matthias-wolf/",
@@ -32,7 +32,7 @@ export const JOINERS: Array<{
   {
     name: "Jochen Madler",
     tag: "YC · Sitefire",
-    line: "Building Sitefire through Y Combinator — a candidate to move into the incubator.",
+    line: "Building Sitefire through Y Combinator, a candidate to move into the incubator.",
     linkedin: { kind: "post", postId: "7435006185210249216" },
   },
   {
@@ -42,6 +42,15 @@ export const JOINERS: Array<{
     linkedin: {
       kind: "profile",
       url: "https://www.linkedin.com/in/henryweigt/",
+    },
+  },
+  {
+    name: "Almo Sutedjo",
+    tag: "Y Combinator",
+    line: "Recently into YC.",
+    linkedin: {
+      kind: "profile",
+      url: "https://www.linkedin.com/in/almo-sutedjo/",
     },
   },
 ];

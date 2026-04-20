@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "MM Incubator",
   description:
-    "For years, we said Manage & More had so much potential. This month, it stopped being potential. Four spaces. €7,500 each. Direct wire. Spot assigned instantly.",
+    "Be visible in Munich's next hub for startups. Manage & More is opening an office, and our best startups will move in. Four spaces. €7,500 each. Direct wire. Spot assigned instantly.",
 };
 
 export const viewport: Viewport = {
