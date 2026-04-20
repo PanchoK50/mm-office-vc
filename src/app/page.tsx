@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <>
       {/* ——— Nav ——— */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-hairline bg-bg/70 backdrop-blur-xl">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-hairline bg-bg">
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
           <a
             href="#top"
@@ -44,7 +44,7 @@ export default function Home() {
           </a>
           <a
             href="#reserve"
-            className="rounded-full border border-hairline-strong bg-surface px-4 py-1.5 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+            className="rounded-md border border-hairline-strong bg-surface px-4 py-1.5 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
           >
             Reserve a space →
           </a>
@@ -81,7 +81,7 @@ export default function Home() {
               </a>
               <a
                 href="#plan"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-hairline px-6 text-sm font-medium tracking-wide text-fg transition hover:border-hairline-strong"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-hairline px-6 text-sm font-medium tracking-wide text-fg transition hover:border-hairline-strong"
               >
                 See the plan
                 <span aria-hidden="true">↓</span>
@@ -112,24 +112,19 @@ export default function Home() {
                     </p>
                     <ul className="mt-6 space-y-4 text-[17px] leading-[1.55] text-fg/90">
                       <li className="flex gap-3">
-                        <Dot /> A founding seat in the M&amp;M Incubator.
+                        <Dot /> A named plaque on the space. For one Year.
                       </li>
                       <li className="flex gap-3">
-                        <Dot /> Demo Day access — 1st-semester teams through
-                        alumni pitches.
+                        <Dot /> Demo Day access; New generation teams, Startup Projects and alumni pitches.
                       </li>
                       <li className="flex gap-3">
                         <Dot /> Access to our Hackathons currently in cooperation with Hacknation at Start2 / CDTM office.
                       </li>
-                      <li className="flex gap-3">
-                        <Dot /> A named plaque on the space. For one Year.
-                      </li>
+                      
                     </ul>
                   </div>
                   <p className="text-sm leading-[1.6] text-muted">
-                    Direct bank transfer. No forms. No platform. The reference
-                    line <em className="not-italic text-fg">is</em> the capture
-                    — we email you within 24h of the wire clearing.
+                    No forms. The transfered Money is the confirmaiton. 
                   </p>
                 </div>
 
@@ -213,7 +208,7 @@ export default function Home() {
               </div>
               <p className="max-w-sm text-sm leading-[1.6] text-muted">
                 Active generations are already shipping — EWOR, Y Combinator,
-                and independent labs. The incubator is where they&rsquo;d sit.{" "}
+                and more. The incubator is where they&rsquo;d sit.{" "}
                 <a
                   href="https://www.manageandmore.de/people/"
                   target="_blank"
@@ -250,7 +245,7 @@ export default function Home() {
                         href={j.linkedin.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-hairline px-4 py-2 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+                        className="inline-flex items-center gap-2 rounded-md border border-hairline px-4 py-2 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                       >
                         View on LinkedIn
                         <span aria-hidden="true">↗</span>
@@ -288,10 +283,12 @@ export default function Home() {
               {/* Demo Day */}
               <div className="flex flex-col gap-8 bg-surface p-10">
                 <div className="flex items-baseline justify-between">
-                  <h3 className="text-2xl font-medium tracking-tight">
-                    Demo Day
-                  </h3>
-                
+                  <div>
+                    <h3 className="text-2xl font-medium tracking-tight">
+                      Demo Day
+                    </h3>
+                    <p className="mt-1 text-sm text-muted">pitches from</p>
+                  </div>
                 </div>
                 <ol className="space-y-5">
                   {DEMO_DAY.map((d, i) => (
@@ -347,9 +344,6 @@ export default function Home() {
         {/* ——— Final CTA ——— */}
         <section className="border-t border-hairline px-6 py-32">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
-              Last call
-            </p>
             <h2 className="mt-6 text-balance text-5xl font-medium leading-[1.02] tracking-[-0.025em] sm:text-6xl">
               Four spaces.
               <br />
@@ -360,7 +354,7 @@ export default function Home() {
             </div>
             <a
               href="#reserve"
-              className="mt-12 inline-flex h-12 items-center justify-center rounded-full bg-accent px-7 text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+              className="mt-12 inline-flex h-12 items-center justify-center rounded-md bg-accent px-7 text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
             >
               Reserve a space — €{price}
             </a>

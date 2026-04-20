@@ -30,15 +30,9 @@ export const JOINERS: Array<{
     },
   },
   {
-    name: "Jochen Madler",
-    tag: "YC · Sitefire",
-    line: "Building Sitefire through Y Combinator, a candidate to move into the incubator.",
-    linkedin: { kind: "post", postId: "7435006185210249216" },
-  },
-  {
     name: "Henry Weigt",
     tag: "EWOR",
-    line: "Backing the next generation of MM founders through EWOR's fellowship.",
+    line: "EWOR Fellow",
     linkedin: {
       kind: "profile",
       url: "https://www.linkedin.com/in/henryweigt/",
@@ -52,6 +46,13 @@ export const JOINERS: Array<{
       kind: "profile",
       url: "https://www.linkedin.com/in/almo-sutedjo/",
     },
+  },
+
+  {
+    name: "Jochen Madler",
+    tag: "YC · Sitefire",
+    line: "Building Sitefire through Y Combinator, a candidate to move into the incubator.",
+    linkedin: { kind: "post", postId: "7435006185210249216" },
   },
 ];
 
