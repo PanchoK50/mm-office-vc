@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { HeaderReserveButton } from "@/components/HeaderReserveButton";
+import { OfficeRaisedTotal } from "@/components/OfficeRaisedTotal";
+import { OfficeRecentDonations } from "@/components/OfficeRecentDonations";
 import { OfficethonTimer } from "@/components/OfficethonTimer";
 import { ReserveDialog } from "@/components/ReserveDialog";
 import { SpaceCounter, type SpotStatus } from "@/components/SpaceCounter";
@@ -59,7 +61,6 @@ export default async function Home() {
   const spotsAvailable = spots.filter((s) => s === "open").length;
 
   const price = PRICE_PER_SPACE.toLocaleString("de-DE");
-  const officeTotal = office.total.toLocaleString("de-DE");
 
   return (
     <>
@@ -121,93 +122,6 @@ export default async function Home() {
  
  
 
-        {/* ——— Officethon ——— */}
-        <section className="border-t border-hairline bg-surface/40 px-6 py-24 sm:py-28">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
-                  Officethon · Live
-                </p>
-                <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-                  Our community is funding the office{" "}
-                  <span className="text-muted">in real time.</span>
-                </h2>
-              </div>
-              <a
-                href="https://officethon.mm-app.de"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-11 items-center justify-center gap-2 self-start rounded-md border border-hairline-strong bg-surface-2 px-5 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-              >
-                officethon.mm-app.de
-                <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-
-            <div className="grid gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline lg:grid-cols-[1fr_1.2fr]">
-              <div className="flex flex-col justify-between gap-10 bg-surface p-8 sm:p-10 lg:p-12">
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
-                    Total raised for the office
-                  </p>
-                  <p className="mt-6 flex items-baseline gap-2">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-                      €
-                    </span>
-                    <span className="text-[44px] font-medium leading-none tracking-[-0.03em] text-fg sm:text-6xl">
-                      {officeTotal}
-                    </span>
-                  </p>
-                </div>
-
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
-                    Live since 19.04. · 13:00
-                  </p>
-                  <div className="mt-4">
-                    <OfficethonTimer />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
-                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
-                  Neuste Spenden
-                </p>
-                {office.recent.length === 0 ? (
-                  <p className="text-[15px] leading-[1.55] text-muted">
-                    Noch keine Spenden — sei der Erste.
-                  </p>
-                ) : (
-                  <ul className="divide-y divide-hairline">
-                    {office.recent.map((d) => (
-                      <li
-                        key={d.id}
-                        className="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0"
-                      >
-                        <div className="min-w-0">
-                          <p className="truncate text-[15px] font-medium text-fg">
-                            {d.donor_name || "Anonym"}
-                          </p>
-                          {d.generation ? (
-                            <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-                              {d.generation}
-                            </p>
-                          ) : null}
-                        </div>
-                        <span className="font-mono text-base font-medium tabular-nums text-accent sm:text-lg">
-                          €{d.amount.toLocaleString("de-DE")}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* ——— What you get ——— */}
         <section className="px-6 py-28 sm:py-36">
           <div className="mx-auto max-w-6xl">
@@ -234,7 +148,7 @@ export default async function Home() {
               </p>
             </div>
 
-            <ul className="grid gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline md:grid-cols-3">
+            <ul className="grid gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline md:grid-cols-2">
               <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
                 <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
                   A named plaque on the space.
@@ -643,7 +557,8 @@ export default async function Home() {
 
           <h2 className="mt-5 text-balance text-[26px] font-medium leading-[1.1] tracking-[-0.02em] text-fg sm:text-[28px]">
             Four spaces.{" "}
-            <span className="text-muted">One wire transfer away.</span>
+            <span className="text-muted"><br></br>First Come First Serve.</span>
+  
           </h2>
 
           <div className="mt-6 flex items-baseline gap-2">
@@ -670,6 +585,57 @@ export default async function Home() {
             No forms up front. The wire is the confirmation.
           </p>
         </div>
+
+        {/* ——— Officethon module ——— */}
+        <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70 opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+              </span>
+              Officethon · Live
+            </div>
+            <a
+              href="https://officethon.mm-app.de"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted transition hover:text-accent"
+            >
+              officethon.mm-app.de ↗
+            </a>
+          </div>
+
+          <div className="mt-5">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+              Raised for the office
+            </p>
+            <p className="mt-2 flex items-baseline gap-1.5">
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+                €
+              </span>
+              <OfficeRaisedTotal amount={office.total} />
+            </p>
+          </div>
+
+          <div className="mt-5 border-t border-hairline pt-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+              Live since 19.04. · 13:00
+            </p>
+            <div className="mt-2">
+              <OfficethonTimer compact />
+            </div>
+          </div>
+        </div>
+
+        {office.recent.length > 0 ? (
+          <div className="border-t border-hairline bg-surface-2/40 px-7 py-6 sm:px-9 sm:py-7">
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
+              Neuste Spenden
+            </p>
+            <OfficeRecentDonations donations={office.recent} />
+          </div>
+        ) : null}
       </aside>
     </>
   );

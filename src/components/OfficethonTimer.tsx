@@ -13,7 +13,7 @@ function format(diffMs: number) {
   return { days, hours, minutes, seconds };
 }
 
-export function OfficethonTimer() {
+export function OfficethonTimer({ compact = false }: { compact?: boolean }) {
   const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
@@ -23,19 +23,24 @@ export function OfficethonTimer() {
   }, []);
 
   const parts = now === null ? null : format(now - START_MS);
+  const numCls = compact
+    ? "text-lg font-medium tracking-[-0.02em] tabular-nums"
+    : "text-2xl font-medium tracking-[-0.02em] tabular-nums sm:text-3xl";
+  const labelCls = compact
+    ? "text-[9px] uppercase tracking-[0.22em] text-muted"
+    : "text-[11px] uppercase tracking-[0.22em] text-muted";
+  const gap = compact ? "gap-2" : "gap-3";
 
   return (
-    <div className="flex items-baseline gap-3 font-mono text-fg">
+    <div className={`flex items-baseline ${gap} font-mono text-fg`}>
       {parts === null ? (
-        <span className="text-2xl tracking-[-0.02em] text-muted sm:text-3xl">
-          --d --:--:--
-        </span>
+        <span className={`${numCls} text-muted`}>--d --:--:--</span>
       ) : (
         <>
-          <Segment value={parts.days} label="d" />
-          <Segment value={parts.hours} label="h" pad />
-          <Segment value={parts.minutes} label="m" pad />
-          <Segment value={parts.seconds} label="s" pad />
+          <Segment value={parts.days} label="d" numCls={numCls} labelCls={labelCls} />
+          <Segment value={parts.hours} label="h" pad numCls={numCls} labelCls={labelCls} />
+          <Segment value={parts.minutes} label="m" pad numCls={numCls} labelCls={labelCls} />
+          <Segment value={parts.seconds} label="s" pad numCls={numCls} labelCls={labelCls} />
         </>
       )}
     </div>
@@ -46,20 +51,20 @@ function Segment({
   value,
   label,
   pad,
+  numCls,
+  labelCls,
 }: {
   value: number;
   label: string;
   pad?: boolean;
+  numCls: string;
+  labelCls: string;
 }) {
   const display = pad ? String(value).padStart(2, "0") : String(value);
   return (
     <span className="flex items-baseline gap-1">
-      <span className="text-2xl font-medium tracking-[-0.02em] tabular-nums sm:text-3xl">
-        {display}
-      </span>
-      <span className="text-[11px] uppercase tracking-[0.22em] text-muted">
-        {label}
-      </span>
+      <span className={numCls}>{display}</span>
+      <span className={labelCls}>{label}</span>
     </span>
   );
 }
