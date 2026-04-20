@@ -18,12 +18,14 @@ export const JOINERS: Array<{
   name: string;
   tag: string;
   line: string;
+  image: string;
   linkedin: JoinerProfile | JoinerPost;
 }> = [
   {
     name: "Matthias Wolf",
     tag: "Pairio · YC P26",
     line: "Just got into YC with Pairio (P26).",
+    image: "/matze.jpeg",
     linkedin: {
       kind: "profile",
       url: "https://www.linkedin.com/in/matthias-wolf/",
@@ -33,6 +35,7 @@ export const JOINERS: Array<{
     name: "Henry Weigt",
     tag: "EWOR",
     line: "EWOR Fellow",
+    image: "/henry.jpeg",
     linkedin: {
       kind: "profile",
       url: "https://www.linkedin.com/in/henryweigt/",
@@ -42,6 +45,7 @@ export const JOINERS: Array<{
     name: "Almo Sutedjo",
     tag: "Y Combinator",
     line: "Recently into YC.",
+    image: "/almo.jpeg",
     linkedin: {
       kind: "profile",
       url: "https://www.linkedin.com/in/almo-sutedjo/",
@@ -52,6 +56,7 @@ export const JOINERS: Array<{
     name: "Jochen Madler",
     tag: "YC · Sitefire",
     line: "Building Sitefire through Y Combinator, a candidate to move into the incubator.",
+    image: "/jochen.jpeg",
     linkedin: { kind: "post", postId: "7435006185210249216" },
   },
 ];

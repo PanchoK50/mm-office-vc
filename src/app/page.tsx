@@ -363,38 +363,50 @@ export default async function Home() {
                 </a>
               </p>
             </div>
-            <ul className="grid gap-6 md:grid-cols-3">
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {JOINERS.map((j) => (
                 <li
                   key={j.name}
-                  className="group flex flex-col gap-5 rounded-2xl border border-hairline bg-surface p-7 transition hover:border-hairline-strong"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-hairline bg-surface transition hover:border-hairline-strong"
                 >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
-                    {j.tag}
-                  </span>
-                  <h3 className="text-2xl font-medium tracking-tight text-fg">
-                    {j.name}
-                  </h3>
-                  <p className="text-[15px] leading-[1.55] text-muted">
-                    {j.line}
-                  </p>
-                  <div className="mt-auto pt-2">
-                    {j.linkedin.kind === "post" ? (
-                      <LinkedInPost
-                        postId={j.linkedin.postId}
-                        title={`${j.name} — LinkedIn post`}
-                      />
-                    ) : (
-                      <a
-                        href={j.linkedin.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-md border border-hairline px-4 py-2 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-                      >
-                        View on LinkedIn
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
+                  <div className="relative aspect-[4/5] w-full overflow-hidden">
+                    <Image
+                      src={j.image}
+                      alt={j.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent" />
+                    <span className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/40 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-accent backdrop-blur-sm">
+                      {j.tag}
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col gap-3 p-6">
+                    <h3 className="text-xl font-medium tracking-tight text-fg">
+                      {j.name}
+                    </h3>
+                    <p className="text-[14px] leading-[1.55] text-muted">
+                      {j.line}
+                    </p>
+                    <div className="mt-auto pt-3">
+                      {j.linkedin.kind === "post" ? (
+                        <LinkedInPost
+                          postId={j.linkedin.postId}
+                          title={`${j.name} — LinkedIn post`}
+                        />
+                      ) : (
+                        <a
+                          href={j.linkedin.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-md border border-hairline px-4 py-2 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+                        >
+                          View on LinkedIn
+                          <span aria-hidden="true">↗</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </li>
               ))}
