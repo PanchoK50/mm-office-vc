@@ -8,7 +8,7 @@ export const BANK_DETAILS = {
   iban: "DE00 0000 0000 0000 0000 00",
   bic: "XXXXDEXXXXX",
   bank: "— placeholder —",
-  reference: "MM-INCUBATOR-<YOUR-LASTNAME>",
+  reference: "",
 };
 
 type JoinerProfile = { kind: "profile"; url: string };
@@ -62,23 +62,23 @@ export const RECENT_WINS: Array<{
   postId: string;
 }> = [
   {
-    name: "Vladi — Lio",
-    tag: "a16z",
+    name: "Lio",
+    tag: "30m",
     postId: "7435665916002099200",
   },
   {
-    name: "Uplane — Marvin Abdel-Massih",
-    tag: "Raise announcement",
+    name: "Uplane",
+    tag: "4.5m",
     postId: "7450867313920270336",
   },
   {
-    name: "Sitegeist — Nicola Kolb",
-    tag: "Raise announcement",
+    name: "Sitegeist",
+    tag: "4m",
     postId: "7431740895386914816",
   },
   {
     name: "Certhub",
-    tag: "Raise announcement",
+    tag: "6.2m",
     postId: "7425578806754762753",
   },
 ];

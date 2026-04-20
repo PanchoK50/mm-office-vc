@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CopyButton } from "@/components/CopyButton";
+import { HeaderReserveButton } from "@/components/HeaderReserveButton";
 import { SpaceCounter } from "@/components/SpaceCounter";
 import { FloatingPaths } from "@/components/ui/background-paths";
 import {
@@ -42,18 +43,13 @@ export default function Home() {
               <span className="text-accent">·</span>&nbsp;Incubator
             </span>
           </a>
-          <a
-            href="#reserve"
-            className="rounded-md border border-hairline-strong bg-surface px-4 py-1.5 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-          >
-            Reserve a space →
-          </a>
+          <HeaderReserveButton />
         </div>
       </header>
 
       <main id="top" className="flex flex-col">
         {/* ——— Hero ——— */}
-        <section className="relative isolate overflow-hidden px-6 pb-28 pt-40 sm:pt-48 lg:pt-56 grain">
+        <section className="relative isolate flex min-h-screen flex-col justify-center overflow-hidden px-6 pb-28 pt-32 sm:pt-36 lg:pt-40 grain">
           <div className="mesh absolute inset-0 -z-10" aria-hidden="true" />
           <div
             className="absolute inset-0 -z-10 rotate-180 opacity-60"
@@ -62,7 +58,7 @@ export default function Home() {
             <FloatingPaths position={1} />
             <FloatingPaths position={-1} />
           </div>
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto w-full max-w-5xl">
             
             <h1 className="fade-up-slow mt-8 text-balance text-[clamp(2.75rem,8.5vw,6.75rem)] font-medium leading-[0.95] tracking-[-0.03em] text-fg">
               Be visible in Munich&rsquo;s
@@ -70,21 +66,14 @@ export default function Home() {
               <span className="text-muted">next hub</span> for startups.
             </h1>
             <p className="fade-up-slower mt-8 max-w-[54ch] text-balance text-lg leading-[1.55] text-muted sm:text-xl">
-              Manage &amp; More is opening an office, and our best startups will move in.
+              Manage and More is opening an office, and our best startups will move in.
             </p>
             <div className="fade-up-slower mt-12 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
                 href="#reserve"
                 className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-6 text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
               >
-                Reserve a space for €{price}
-              </a>
-              <a
-                href="#plan"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-hairline px-6 text-sm font-medium tracking-wide text-fg transition hover:border-hairline-strong"
-              >
-                See the plan
-                <span aria-hidden="true">↓</span>
+                Secure a space for €{price}
               </a>
             </div>
           </div>
@@ -146,12 +135,6 @@ export default function Home() {
                   <BankRow label="IBAN" value={BANK_DETAILS.iban} mono />
                   <BankRow label="BIC" value={BANK_DETAILS.bic} mono />
                   <BankRow label="Bank" value={BANK_DETAILS.bank} />
-                  <BankRow
-                    label="Reference"
-                    value={BANK_DETAILS.reference}
-                    mono
-                    hint="Replace <YOUR-LASTNAME> with your surname so we can match the wire to your seat."
-                  />
                 </div>
               </div>
             </div>
@@ -341,6 +324,90 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ——— Location ——— */}
+        <section className="border-t border-hairline px-6 py-28 sm:py-36">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-16 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+                  Prime location for the next founding hub
+                </p>
+                <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
+                  Where you&rsquo;ll find{" "}
+                  <span className="text-muted">your plaque.</span>
+                </h2>
+              </div>
+            
+            </div>
+
+            <div className="overflow-hidden rounded-3xl border border-hairline bg-surface">
+              <div className="grid lg:grid-cols-[1fr_1.35fr]">
+                <div className="flex flex-col justify-between gap-10 p-8 sm:p-10 lg:p-14">
+                  <div>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
+                      Office
+                    </p>
+                    <p className="mt-6 text-2xl font-medium leading-[1.25] tracking-tight text-fg sm:text-[28px]">
+                      Kunstlabor 2 · Maxvorstadt
+                    </p>
+                    <p className="mt-3 text-[17px] leading-[1.55] text-muted">
+                      Dachauer Str. 90
+                      <br />
+                      80335 München
+                    </p>
+                  </div>
+
+                  <ul className="space-y-3 text-sm text-muted">
+                    <li className="flex items-center gap-3">
+                      <Dot /> 7 min walk from München Hbf
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <Dot /> Tram 20 / 21 — Stiglmaierplatz
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <Dot /> 400m to TUM Main Campus
+                    </li>
+                  </ul>
+
+                  <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                    <a
+                      href="https://www.google.com/maps/dir/?api=1&destination=Kunstlabor+2,+Dachauer+Str.+90,+80335+M%C3%BCnchen"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-hairline-strong bg-surface-2 px-5 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+                    >
+                      Get directions
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div className="relative min-h-[360px] lg:min-h-[520px]">
+                  <iframe
+                    title="Kunstlabor 2 — Dachauer Str. 90, München"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=11.5475%2C48.1435%2C11.5585%2C48.1510&layer=mapnik&marker=48.14725%2C11.55305"
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full border-0 [filter:invert(0.92)_hue-rotate(180deg)_saturate(0.75)_brightness(0.95)_contrast(0.95)]"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_50%,transparent_40%,rgba(0,0,0,0.55)_100%)]"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(13,13,16,0.85)_0%,transparent_18%,transparent_100%)] hidden lg:block"
+                  />
+                  <div className="pointer-events-none absolute left-6 top-6 flex items-center gap-2 rounded-full border border-hairline-strong bg-bg/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-fg backdrop-blur">
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_12px_2px_var(--accent)]" />
+                    48.1472° N · 11.5530° E
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ——— Final CTA ——— */}
         <section className="border-t border-hairline px-6 py-32">
           <div className="mx-auto max-w-4xl text-center">
@@ -356,23 +423,48 @@ export default function Home() {
               href="#reserve"
               className="mt-12 inline-flex h-12 items-center justify-center rounded-md bg-accent px-7 text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
             >
-              Reserve a space — €{price}
+              Secure a space for €{price}
             </a>
           </div>
         </section>
 
         {/* ——— Footer ——— */}
         <footer className="border-t border-hairline px-6 py-10">
-          <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-muted sm:flex-row sm:items-center">
-            <span>M&amp;M · Manage and More e.V.</span>
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
             <span>
               <a
-                href="mailto:incubator@manage-and-more.de"
+                href="mailto:felix.hadasch@manageandmore.de"
                 className="hover:text-fg"
               >
-                incubator@manage-and-more.de
+                felix.hadasch@manageandmore.de
               </a>
             </span>
+            <nav className="flex items-center gap-5">
+              <a
+                href="https://www.manageandmore.de/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-fg"
+              >
+                Website
+              </a>
+              <a
+                href="https://www.linkedin.com/company/manage-and-more/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-fg"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://www.instagram.com/manageandmore/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-fg"
+              >
+                Instagram
+              </a>
+            </nav>
             <span>© {new Date().getFullYear()}</span>
           </div>
         </footer>
