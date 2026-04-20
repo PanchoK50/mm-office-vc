@@ -85,7 +85,8 @@ body {
   }
 }
 
-.reserve-panel {
+.reserve-panel,
+.reserve-dialog {
   color-scheme: light;
   --bg: #ffffff;
   --surface: #ffffff;
@@ -95,12 +96,43 @@ body {
   --hairline: rgba(10, 10, 15, 0.09);
   --hairline-strong: rgba(10, 10, 15, 0.22);
   color: var(--fg);
+}
+
+.reserve-panel {
   background: var(--bg);
 }
 
 /* Keep the form stacked in one column inside the narrow side panel */
 .reserve-panel form .sm\:grid-cols-2 {
   grid-template-columns: 1fr;
+}
+
+/* Make the reserve dialog compact enough to fit one screen */
+.reserve-dialog input,
+.reserve-dialog button,
+.reserve-dialog select,
+.reserve-dialog textarea {
+  color-scheme: light;
+}
+.reserve-dialog form {
+  --tw-space-y-reverse: 0;
+}
+.reserve-dialog form > * + * {
+  margin-top: 0.75rem;
+}
+.reserve-dialog form input[type="text"],
+.reserve-dialog form input[type="email"],
+.reserve-dialog form input[type="tel"] {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 13.5px;
+}
+.reserve-dialog form .min-h-\[120px\] {
+  min-height: 72px;
+  padding: 0.75rem;
+}
+.reserve-dialog form button[type="submit"] {
+  height: 2.5rem;
 }
 
 /* lg+: float the panel to the right of a notional 1440px container,

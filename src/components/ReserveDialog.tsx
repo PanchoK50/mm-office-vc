@@ -69,30 +69,27 @@ export function ReserveDialog({
               role="dialog"
               aria-modal="true"
               aria-label="Reserve a space"
-              className="reserve-dialog fixed inset-0 z-[100] flex items-end justify-center overflow-y-auto bg-black/70 p-0 backdrop-blur-sm sm:items-center sm:p-6"
+              className="reserve-dialog fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-3 backdrop-blur-sm sm:p-4"
               onClick={() => setOpen(false)}
             >
               <div
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-xl overflow-hidden rounded-t-3xl border border-hairline bg-surface shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)] sm:rounded-3xl"
+                className="relative flex max-h-[100dvh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-hairline bg-bg shadow-[0_30px_80px_-20px_rgba(0,0,0,0.5)] sm:max-h-[95dvh]"
               >
-                <div className="flex items-start justify-between gap-4 p-6 pb-0 sm:p-8 sm:pb-0">
+                <div className="flex items-start justify-between gap-4 px-5 pt-5 sm:px-7 sm:pt-6">
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
                       Reserve a space
                     </p>
-                    <h3 className="mt-3 text-balance text-[22px] font-medium leading-[1.2] tracking-[-0.015em] text-fg sm:text-2xl">
+                    <h3 className="mt-1.5 text-balance text-[19px] font-medium leading-[1.2] tracking-[-0.015em] text-fg sm:text-[22px]">
                       Wire €{price} &mdash; then confirm below.
                     </h3>
-                    <p className="mt-2 text-[13px] leading-[1.55] text-muted">
-                      Your spot is assigned the moment the wire lands.
-                    </p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
                     aria-label="Close"
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition hover:border-hairline-strong hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition hover:border-hairline-strong hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <svg
                       viewBox="0 0 16 16"
@@ -110,31 +107,33 @@ export function ReserveDialog({
                   </button>
                 </div>
 
-                <div className="mt-8 border-t border-hairline p-6 sm:p-8">
-                  <div className="flex items-center justify-between">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
-                      Wire details
-                    </p>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted/60">
-                      SEPA
-                    </span>
+                <div className="grid min-h-0 flex-1 gap-0 overflow-y-auto px-5 py-5 sm:grid-cols-2 sm:gap-6 sm:px-7 sm:py-6">
+                  <div className="flex min-w-0 flex-col">
+                    <div className="flex items-center justify-between">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
+                        Wire details
+                      </p>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted/60">
+                        SEPA
+                      </span>
+                    </div>
+                    <div className="mt-2 divide-y divide-hairline">
+                      <WireRow label="Recipient" value={BANK_DETAILS.recipient} />
+                      <WireRow label="IBAN" value={BANK_DETAILS.iban} mono />
+                      <WireRow label="BIC" value={BANK_DETAILS.bic} mono />
+                      <WireRow label="Bank" value={BANK_DETAILS.bank} />
+                    </div>
                   </div>
-                  <div className="mt-5 divide-y divide-hairline">
-                    <WireRow label="Recipient" value={BANK_DETAILS.recipient} />
-                    <WireRow label="IBAN" value={BANK_DETAILS.iban} mono />
-                    <WireRow label="BIC" value={BANK_DETAILS.bic} mono />
-                    <WireRow label="Bank" value={BANK_DETAILS.bank} />
-                  </div>
-                </div>
 
-                <div className="border-t border-hairline bg-surface-2/30 p-6 sm:p-8">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
-                    Confirm your transfer
-                  </p>
-                  <p className="mt-2 mb-6 text-[13px] leading-[1.55] text-muted">
-                    Upload your payment confirmation to reserve instantly.
-                  </p>
-                  <ClaimForm spotsAvailable={spotsAvailable} />
+                  <div className="mt-5 flex min-w-0 flex-col border-t border-hairline pt-5 sm:mt-0 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
+                      Confirm your transfer
+                    </p>
+                    <p className="mt-1.5 mb-4 text-[12.5px] leading-[1.5] text-muted">
+                      Upload your payment confirmation to reserve instantly.
+                    </p>
+                    <ClaimForm spotsAvailable={spotsAvailable} />
+                  </div>
                 </div>
               </div>
             </div>,
@@ -155,13 +154,13 @@ function WireRow({
   mono?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4 py-4">
-      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+    <div className="flex items-center justify-between gap-3 py-2">
+      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
         {label}
       </span>
-      <div className="flex min-w-0 flex-1 items-center justify-end gap-3">
+      <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
         <span
-          className={`truncate text-fg ${mono ? "font-mono text-[14px] tracking-wide" : "text-[15px]"}`}
+          className={`truncate text-fg ${mono ? "font-mono text-[12.5px] tracking-wide" : "text-[13px]"}`}
           title={value}
         >
           {value}

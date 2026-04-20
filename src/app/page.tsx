@@ -400,7 +400,7 @@ export default async function Home() {
                 <div className="relative min-h-[360px] lg:min-h-[520px]">
                   <iframe
                     title="Kunstlabor 2 — Dachauer Str. 90, München"
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=11.5475%2C48.1435%2C11.5585%2C48.1510&layer=mapnik&marker=48.14725%2C11.55305"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=11.5530%2C48.1470%2C11.5640%2C48.1545&layer=mapnik&marker=48.15088522540868%2C11.558447304480815"
                     loading="lazy"
                     className="absolute inset-0 h-full w-full border-0 [filter:invert(0.92)_hue-rotate(180deg)_saturate(0.75)_brightness(0.95)_contrast(0.95)]"
                   />
@@ -414,7 +414,7 @@ export default async function Home() {
                   />
                   <div className="pointer-events-none absolute left-6 top-6 flex items-center gap-2 rounded-full border border-hairline-strong bg-bg/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-fg backdrop-blur">
                     <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_12px_2px_var(--accent)]" />
-                    48.1472° N · 11.5530° E
+                    48.1509° N · 11.5584° E
                   </div>
                 </div>
               </div>
