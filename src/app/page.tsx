@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { HeaderReserveButton } from "@/components/HeaderReserveButton";
 import { OfficeRaisedTotal } from "@/components/OfficeRaisedTotal";
 import { OfficeRecentDonations } from "@/components/OfficeRecentDonations";
 import { ReserveDialog } from "@/components/ReserveDialog";
@@ -10,7 +9,6 @@ import {
   createServerClient,
 } from "@/lib/supabase/server";
 import {
-  DEMO_DAY,
   HACK_NATION_POST_ID,
   JOINERS,
   PRICE_PER_SPACE,
@@ -92,7 +90,6 @@ export default async function Home() {
                 <span className="text-accent">·</span>&nbsp;Incubator
               </span>
             </a>
-            <HeaderReserveButton />
           </div>
         </div>
       </header>
@@ -114,10 +111,13 @@ export default async function Home() {
           <div className="mx-auto w-full max-w-5xl">
             
             <h1 className="fade-up-slow mt-8 text-balance text-[clamp(2.75rem,8.5vw,6.75rem)] font-medium leading-[0.95] tracking-[-0.03em] text-fg">
-              Be visible in Munich&rsquo;s
+              The hottest place to be
               <br className="hidden sm:block" />{" "}
-              <span className="text-muted">next hub</span> for startups.
+              <span className="text-muted">in the next years</span> to come.
             </h1>
+            <p className="fade-up-slower mt-6 max-w-[54ch] text-balance text-xl leading-[1.4] tracking-[-0.01em] text-fg sm:text-2xl">
+              This is your chance to be part of it.
+            </p>
             <p className="fade-up-slower mt-8 max-w-[54ch] text-balance text-lg leading-[1.55] text-muted sm:text-xl">
               Manage and More is opening an office, and our best startups will move in.
             </p>
@@ -158,38 +158,44 @@ export default async function Home() {
               </p>
             </div>
 
-            <ul className="grid gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline md:grid-cols-2">
-              <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
-                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
-                  A named plaque on the space.
+            <ul className="grid gap-px overflow-hidden rounded-3xl bg-black/10 ring-1 ring-white/15 shadow-[0_40px_120px_-30px_rgba(255,255,255,0.35)] md:grid-cols-2">
+              <li className="flex flex-col gap-6 bg-white p-8 sm:p-10 lg:p-12">
+                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-black sm:text-3xl">
+                  Brand one of our Incubation Rooms
                 </p>
-                <p className="mt-auto text-[15px] leading-[1.55] text-muted">
-                  Mounted for one year. Your name on the hub.
-                </p>
-              </li>
-              <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
-                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
-                  Demo Day access.
-                </p>
-                <p className="mt-auto text-[15px] leading-[1.55] text-muted">
-                  New-generation teams, Startup Projects and alumni pitches —
-                  first look at the pipeline.
+                <p className="mt-auto text-[15px] leading-[1.55] text-black/70">
+                  A dedicated room named after your fund for twelve months, where our top incubated startups build every day.
                 </p>
               </li>
-              <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
-                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
-                  Hackathon access.
+              <li className="flex flex-col gap-6 bg-white p-8 sm:p-10 lg:p-12">
+                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-black sm:text-3xl">
+                  Jury at our Demo Day.
                 </p>
-                <p className="mt-auto text-[15px] leading-[1.55] text-muted">
-                  Currently in cooperation with Hacknation at the
-                  Start2 / CDTM office.
+                <p className="mt-auto text-[15px] leading-[1.55] text-black/70">
+                  You will be part of the jury at our Demo Day, where our top incubated startups pitch.
                 </p>
               </li>
-              <li className="flex flex-col gap-6 bg-surface p-8 sm:p-10 lg:p-12">
-                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-fg sm:text-3xl">
-                  Fixed spot of your Fund in our curriculum.
+              <li className="flex flex-col gap-6 bg-white p-8 sm:p-10 lg:p-12">
+                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-black sm:text-3xl">
+                  Jury at Hackathon.
                 </p>
-                <p className="mt-auto text-[15px] leading-[1.55] text-muted">
+                <p className="mt-auto text-[15px] leading-[1.55] text-black/70">
+                  You will be part of the jury at our Hackathon.{" "}
+                  <a
+                    href={`https://www.linkedin.com/feed/update/urn:li:activity:${HACK_NATION_POST_ID}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-black underline decoration-black/30 underline-offset-4 transition hover:text-accent hover:decoration-accent"
+                  >
+                    See our last hackathon ↗
+                  </a>
+                </p>
+              </li>
+              <li className="flex flex-col gap-6 bg-white p-8 sm:p-10 lg:p-12">
+                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-black sm:text-3xl">
+                  Fixed spot in our curriculum.
+                </p>
+                <p className="mt-auto text-[15px] leading-[1.55] text-black/70">
                   You will meet every new MM scholar at least once.
                 </p>
               </li>
@@ -345,78 +351,6 @@ export default async function Home() {
               Until now, only Unternehmertum had early access.{" "}
               
             </blockquote>
-          </div>
-        </section>
-
-        {/* ——— What investors get ——— */}
-        <section className="border-t border-hairline bg-surface/40 px-6 py-28">
-          <div className="mx-auto max-w-6xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-              What investors get
-            </p>
-            <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-              Two windows into the pipeline.
-            </h2>
-
-            <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline lg:grid-cols-2">
-              {/* Demo Day */}
-              <div className="flex flex-col gap-8 bg-surface p-10">
-                <div className="flex items-baseline justify-between">
-                  <div>
-                    <h3 className="text-2xl font-medium tracking-tight">
-                      Demo Day
-                    </h3>
-                    <p className="mt-1 text-sm text-muted">pitches from</p>
-                  </div>
-                </div>
-                <ol className="space-y-5">
-                  {DEMO_DAY.map((d, i) => (
-                    <li
-                      key={d.label}
-                      className="flex items-start gap-6 border-l border-hairline pl-6"
-                    >
-                      <span className="font-mono text-xs tracking-[0.18em] text-accent">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div>
-                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-                          {d.stage}
-                        </p>
-                        <p className="mt-1 text-lg text-fg">{d.label}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-
-              {/* Hack Nation */}
-              <div className="flex flex-col gap-6 bg-surface p-10">
-                <div className="flex items-baseline justify-between">
-                  <h3 className="text-2xl font-medium tracking-tight">
-                    Hackathon
-                  </h3>
-                </div>
-                <p className="text-[15px] leading-[1.55] text-fg">
-                  Our hackathon, currently hosted at the{" "}
-                  <span className="text-accent">Start2 / CDTM office</span>.
-                  Now hosted at our own office and open if you invest.
-                </p>
-                <ul className="space-y-2 text-sm text-muted">
-                  <li className="flex items-center gap-3">
-                    <Dot /> Investor access included
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <Dot /> Judging & mentor slot on request
-                  </li>
-                </ul>
-                <div className="mt-auto">
-                  <LinkedInPost
-                    postId={HACK_NATION_POST_ID}
-                    title="Hack Nation — recap"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 

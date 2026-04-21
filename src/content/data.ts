@@ -45,14 +45,14 @@ export const JOINERS: Array<{
     },
   },
   {
-    name: "Almo Sutedjo",
-    tag: "Y Combinator",
-    line: "Recently into YC.",
-    image: "/almo.jpeg",
-    logo: "/Y_Combinator_logo.svg",
+    name: "Naomi Jagutis",
+    tag: "Nuno Labs",
+    line: "Just back from Stanford and currently at Xpreneurs, hiring their first employees at Nuno Labs.",
+    image: "/naomi.jpeg",
+    logo: "/Xpreneurs.png",
     linkedin: {
       kind: "profile",
-      url: "https://www.linkedin.com/in/almo-sutedjo/",
+      url: "https://www.linkedin.com/company/nuno-labs/",
     },
   },
   {
@@ -96,18 +96,3 @@ export const RECENT_WINS: Array<{
 ];
 
 export const HACK_NATION_POST_ID = "7449742571863638016";
-
-export const DEMO_DAY = [
-  {
-    stage: "1st semester",
-    label: "Business Design Deep Dive",
-  },
-  {
-    stage: "2nd & 3rd semester",
-    label: "Startup Projects",
-  },
-  {
-    stage: "Alumni",
-    label: "Founder pitches",
-  },
-];
