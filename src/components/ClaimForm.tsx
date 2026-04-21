@@ -70,7 +70,7 @@ export function ClaimForm({ spotsAvailable }: { spotsAvailable: number }) {
         </div>
         <p className="text-lg font-medium text-fg">{result.message}</p>
         <p className="mt-2 text-sm text-muted">
-          We&rsquo;ll email you once the wire clears.
+          We&rsquo;ll be in touch shortly.
         </p>
       </div>
     );
@@ -227,7 +227,7 @@ export function ClaimForm({ spotsAvailable }: { spotsAvailable: number }) {
         <p className="text-center text-xs text-muted">
           After submitting, send your confirmation screenshot to{" "}
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I just wired €7,500 for an MM Incubator space.")}`}
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I'd like to confirm my sponsoring of €7,500 for an MM Incubator space.")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-accent underline underline-offset-2 hover:brightness-110"

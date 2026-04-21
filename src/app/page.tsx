@@ -3,6 +3,7 @@ import { OfficeRaisedTotal } from "@/components/OfficeRaisedTotal";
 import { OfficeRecentDonations } from "@/components/OfficeRecentDonations";
 import { ReserveDialog } from "@/components/ReserveDialog";
 import { SpaceCounter, type Spot, type SpotStatus } from "@/components/SpaceCounter";
+import { MobileStickyFooter } from "@/components/MobileStickyFooter";
 import { FloatingPaths } from "@/components/ui/background-paths";
 import {
   createOfficethonServerClient,
@@ -162,7 +163,7 @@ export default async function Home() {
         </div>
       </header>
 
-      <main id="top" className="relative flex flex-col lg:pr-[440px]">
+      <main id="top" className="relative flex flex-col pb-20 lg:pb-0 lg:pr-[440px]">
         {/* ——— Hero ——— */}
         <section className="relative isolate flex min-h-screen flex-col justify-center overflow-hidden lg:overflow-visible px-6 pb-28 pt-32 sm:pt-36 lg:pt-40 grain">
           <div
@@ -671,6 +672,8 @@ export default async function Home() {
           </dl>
         </div>
       </aside>
+
+      <MobileStickyFooter spotsAvailable={spotsAvailable} />
     </>
   );
 }
