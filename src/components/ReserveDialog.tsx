@@ -367,10 +367,10 @@ export function ReserveDialog({
 
                       {/* Bank details */}
                       <div className="space-y-1 rounded-xl border border-hairline bg-surface-2/60 p-4 text-sm">
-                        <Row label="Recipient" value={BANK_DETAILS.recipient} />
+                        <Row label="Account holder" value={BANK_DETAILS.accountHolder} />
                         <Row label="IBAN" value={BANK_DETAILS.iban} mono />
                         <Row label="BIC" value={BANK_DETAILS.bic} mono />
-                        <Row label="Bank" value={BANK_DETAILS.bank} />
+                        <Row label="Reference" value={BANK_DETAILS.reference} />
                         <Row label="Amount" value={`€${price}`} emphasis />
                       </div>
 

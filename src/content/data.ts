@@ -2,13 +2,11 @@ export const SPACES_FILLED = 0;
 export const SPACES_TOTAL = 4;
 export const PRICE_PER_SPACE = 7500;
 
-// TODO: replace with real bank details before launch.
 export const BANK_DETAILS = {
-  recipient: "Manage & More e.V.",
-  iban: "DE00 0000 0000 0000 0000 00",
-  bic: "XXXXDEXXXXX",
-  bank: "— placeholder —",
-  reference: "",
+  accountHolder: "Stiftung Thomas Kirchner Bildungsförderungs gGmbH",
+  iban: "DE46 3003 0900 1050 6926 21",
+  bic: "MEFIDEMM300",
+  reference: "Spende Manage and More Büro",
 };
 
 type JoinerProfile = { kind: "profile"; url: string };

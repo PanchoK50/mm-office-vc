@@ -9,6 +9,7 @@ import {
   createServerClient,
 } from "@/lib/supabase/server";
 import {
+  BANK_DETAILS,
   HACK_NATION_POST_ID,
   JOINERS,
   PRICE_PER_SPACE,
@@ -22,6 +23,14 @@ export const revalidate = 30;
    (19_093.93 + 19_325.70 + 14_351.11 + 17_867.28 + 18_208.00).
    Mirrors FUNDRAISING_GOAL in the officethon repo. */
 const OFFICE_FUNDRAISING_GOAL = 104_382.03;
+
+/* Mirrors ROOMS in the officethon repo (fill-order: community → incubation). */
+const SPACE_ROOMS = [
+  { id: 3, name: "", sqm: 28.05, image: "/office/room3.jpg" },
+  { id: 8, name: "", sqm: 26.22, image: "/office/room4.jpg" },
+  { id: 9, name: "", sqm: 26.72, image: "/office/room6.jpg" },
+  { id: 9, name: "", sqm: 26.72, image: "/office/room6.jpg" },
+] as const;
 
 async function getSpots(): Promise<Spot[]> {
   const supabase = createServerClient();
@@ -297,34 +306,54 @@ export default async function Home() {
         </section>
 
         {/* ——— The space ——— */}
-        <section className="border-t border-hairline bg-surface/30 px-6 py-28 sm:py-36">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-12 max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
-                The space
-              </p>
-              <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-                How it looks{" "}
-                <span className="text-muted">today.</span>
-              </h2>
-            </div>
+        <section className="border-t border-hairline bg-surface/30 py-28 sm:py-36">
+          <div className="mx-auto mb-12 max-w-6xl px-6">
+            <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+              The space
+            </p>
+            <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
+              Office Loading...
+            </h2>
+            <p className="mt-6 max-w-2xl text-lg leading-[1.55] text-muted">
+              Five rooms, one floor — here&rsquo;s what they&rsquo;ll become.
+            </p>
+          </div>
 
-            <ul className="grid gap-6 sm:grid-cols-2">
-              {[1, 2, 3, 4].map((n) => (
-                <li
-                  key={n}
-                  className="overflow-hidden rounded-3xl border border-hairline bg-surface"
+          <div className="mx-auto max-w-[1440px]">
+            <div className="flex snap-x snap-proximity gap-4 overflow-x-auto scroll-smooth pb-6 pl-6 pr-6 scroll-pl-6 lg:pl-[max(calc((100vw-72rem)/2),1.5rem)]">
+              {SPACE_ROOMS.map((room, index) => (
+                <div
+                  key={index}
+                  className="flex w-80 shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-hairline bg-surface"
                 >
-                  <Image
-                    src={`/space${n}.jpg`}
-                    alt={`Office space ${n}`}
-                    width={2390}
-                    height={1792}
-                    className="h-auto w-full"
-                  />
-                </li>
+                  <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-surface-2">
+                    <Image
+                      src={room.image}
+                      alt={room.name}
+                      fill
+                      sizes="256px"
+                      className="object-cover"
+                    />
+                    <div className="absolute left-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-bg/80 text-[10px] font-bold text-muted ring-1 ring-hairline">
+                      {index + 1}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1 flex-col gap-3 p-4">
+                    <div>
+                      <p className="text-sm font-bold leading-tight text-fg">
+                        Room {room.id}
+                      </p>
+                      <div className="mt-1.5 flex flex-wrap gap-1">
+                        <span className="rounded-full bg-surface-2 px-2 py-0.5 text-[10px] text-muted">
+                          {room.sqm} m²
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
 
@@ -682,29 +711,25 @@ export default async function Home() {
               <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
                 Account holder
               </dt>
-              <dd className="mt-1 text-fg">
-                Stiftung Thomas Kirchner Bildungsförderungs gGmbH
-              </dd>
+              <dd className="mt-1 text-fg">{BANK_DETAILS.accountHolder}</dd>
             </div>
             <div>
               <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
                 IBAN
               </dt>
-              <dd className="mt-1 font-mono text-fg">
-                DE46 3003 0900 1050 6926 21
-              </dd>
+              <dd className="mt-1 font-mono text-fg">{BANK_DETAILS.iban}</dd>
             </div>
             <div>
               <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
                 BIC
               </dt>
-              <dd className="mt-1 font-mono text-fg">MEFIDEMM300</dd>
+              <dd className="mt-1 font-mono text-fg">{BANK_DETAILS.bic}</dd>
             </div>
             <div>
               <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
                 Reference
               </dt>
-              <dd className="mt-1 text-fg">Spende Manage and More Büro</dd>
+              <dd className="mt-1 text-fg">{BANK_DETAILS.reference}</dd>
             </div>
           </dl>
         </div>
