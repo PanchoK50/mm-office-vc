@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { OfficethonTimer } from "@/components/OfficethonTimer";
+import {
+  OfficethonTimer,
+  OFFICETHON_FUNDRAISE_TIME_RANGE,
+} from "@/components/OfficethonTimer";
 
 const GREEN = "#00a2cc";
 const TRACK = "#f3f4f6";
@@ -82,7 +85,10 @@ export function OfficeRaisedTotal({
 
       <div className="mt-3 border-t border-hairline pt-3">
         <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
-          Live since 19.04. · 14:30
+          Completion of fundraising in:
+        </p>
+        <p className="mt-1 text-[10px] font-medium tabular-nums text-muted">
+          {OFFICETHON_FUNDRAISE_TIME_RANGE}
         </p>
         <div className="mt-2">
           <OfficethonTimer compact />
