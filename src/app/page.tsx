@@ -183,12 +183,9 @@ export default async function Home() {
               <br className="hidden sm:block" />{" "}
               <span className="text-muted">in the next years</span> to come.
             </h1>
-            <p className="fade-up-slower mt-6 max-w-[54ch] text-balance text-xl leading-[1.4] tracking-[-0.01em] text-fg sm:text-2xl">
-              This is your chance to be part of it.
-            </p>
+            
             <p className="fade-up-slower mt-8 max-w-[54ch] text-balance text-lg leading-[1.55] text-muted sm:text-xl">
-              Manage and More is opening an office, and our best startups will move in.
-            </p>
+             This is your chance to be part of it.</p>
             <div className="fade-up-slower mt-12 flex flex-col gap-3 sm:flex-row sm:items-center">
             </div>
           </div>
