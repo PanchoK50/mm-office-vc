@@ -24,14 +24,6 @@ export const revalidate = 30;
    Mirrors FUNDRAISING_GOAL in the officethon repo. */
 const OFFICE_FUNDRAISING_GOAL = 104_382.03;
 
-/* Mirrors ROOMS in the officethon repo (fill-order: community → incubation). */
-const SPACE_ROOMS = [
-  { id: 3, name: "", sqm: 28.05, image: "/office/room3.jpg" },
-  { id: 8, name: "", sqm: 26.22, image: "/office/room4.jpg" },
-  { id: 9, name: "", sqm: 26.72, image: "/office/room6.jpg" },
-  { id: 9, name: "", sqm: 26.72, image: "/office/room6.jpg" },
-] as const;
-
 async function getSpots(): Promise<Spot[]> {
   const supabase = createServerClient();
 
@@ -301,58 +293,6 @@ export default async function Home() {
                 height={1146}
                 className="h-auto w-full rounded-xl"
               />
-            </div>
-          </div>
-        </section>
-
-        {/* ——— The space ——— */}
-        <section className="border-t border-hairline bg-surface/30 py-28 sm:py-36">
-          <div className="mx-auto mb-12 max-w-6xl px-6">
-            <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
-              The space
-            </p>
-            <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-              Office Loading...
-            </h2>
-            <p className="mt-6 max-w-2xl text-lg leading-[1.55] text-muted">
-              Five rooms, one floor — here&rsquo;s what they&rsquo;ll become.
-            </p>
-          </div>
-
-          <div className="mx-auto max-w-[1440px]">
-            <div className="flex snap-x snap-proximity gap-4 overflow-x-auto scroll-smooth pb-6 pl-6 pr-6 scroll-pl-6 lg:pl-[max(calc((100vw-72rem)/2),1.5rem)]">
-              {SPACE_ROOMS.map((room, index) => (
-                <div
-                  key={index}
-                  className="flex w-80 shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-hairline bg-surface"
-                >
-                  <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-surface-2">
-                    <Image
-                      src={room.image}
-                      alt={room.name}
-                      fill
-                      sizes="256px"
-                      className="object-cover"
-                    />
-                    <div className="absolute left-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-bg/80 text-[10px] font-bold text-muted ring-1 ring-hairline">
-                      {index + 1}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-1 flex-col gap-3 p-4">
-                    <div>
-                      <p className="text-sm font-bold leading-tight text-fg">
-                        Room {room.id}
-                      </p>
-                      <div className="mt-1.5 flex flex-wrap gap-1">
-                        <span className="rounded-full bg-surface-2 px-2 py-0.5 text-[10px] text-muted">
-                          {room.sqm} m²
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </section>
