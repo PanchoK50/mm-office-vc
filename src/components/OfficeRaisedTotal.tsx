@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { OfficethonTimer } from "@/components/OfficethonTimer";
 
-const GREEN = "#34d399";
+const GREEN = "#00a2cc";
 const TRACK = "#f3f4f6";
 
 function formatEUR(n: number): string {

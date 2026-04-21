@@ -2,7 +2,7 @@ import Image from "next/image";
 import { OfficeRaisedTotal } from "@/components/OfficeRaisedTotal";
 import { OfficeRecentDonations } from "@/components/OfficeRecentDonations";
 import { ReserveDialog } from "@/components/ReserveDialog";
-import { SpaceCounter, type SpotStatus } from "@/components/SpaceCounter";
+import { SpaceCounter, type Spot, type SpotStatus } from "@/components/SpaceCounter";
 import { FloatingPaths } from "@/components/ui/background-paths";
 import {
   createOfficethonServerClient,
@@ -23,15 +23,47 @@ export const revalidate = 30;
    Mirrors FUNDRAISING_GOAL in the officethon repo. */
 const OFFICE_FUNDRAISING_GOAL = 104_382.03;
 
-async function getSpots(): Promise<SpotStatus[]> {
+async function getSpots(): Promise<Spot[]> {
   const supabase = createServerClient();
-  const { data } = await supabase
+
+  const { data: spotRows, error: spotsErr } = await supabase
     .from("spots")
-    .select("id, status")
+    .select("id, status, claim_id")
     .order("id");
 
-  if (!data) return Array.from({ length: SPACES_TOTAL }, () => "open" as const);
-  return data.map((s) => s.status as SpotStatus);
+  if (spotsErr) console.error("[getSpots] spots query failed:", spotsErr);
+
+  if (!spotRows)
+    return Array.from({ length: SPACES_TOTAL }, () => ({
+      status: "open" as const,
+      fundName: null,
+    }));
+
+  const claimIds = spotRows
+    .map((s) => s.claim_id as string | null)
+    .filter((id): id is string => !!id);
+
+  let fundByClaimId = new Map<string, string | null>();
+  if (claimIds.length > 0) {
+    const { data: claimRows, error: claimsErr } = await supabase
+      .from("claims")
+      .select("id, fund_name")
+      .in("id", claimIds);
+
+    if (claimsErr) console.error("[getSpots] claims query failed:", claimsErr);
+
+    fundByClaimId = new Map(
+      (claimRows ?? []).map((c) => [
+        c.id as string,
+        (c.fund_name as string | null) ?? null,
+      ]),
+    );
+  }
+
+  return spotRows.map((s) => ({
+    status: s.status as SpotStatus,
+    fundName: s.claim_id ? fundByClaimId.get(s.claim_id as string) ?? null : null,
+  }));
 }
 
 type OfficeDonation = {
@@ -60,7 +92,7 @@ async function getOfficeDonations(): Promise<{
 
 export default async function Home() {
   const [spots, office] = await Promise.all([getSpots(), getOfficeDonations()]);
-  const spotsAvailable = spots.filter((s) => s === "open").length;
+  const spotsAvailable = spots.filter((s) => s.status === "open").length;
 
   const price = PRICE_PER_SPACE.toLocaleString("de-DE");
 
@@ -111,7 +143,7 @@ export default async function Home() {
           <div className="mx-auto w-full max-w-5xl">
             
             <h1 className="fade-up-slow mt-8 text-balance text-[clamp(2.75rem,8.5vw,6.75rem)] font-medium leading-[0.95] tracking-[-0.03em] text-fg">
-              The hottest place to be
+              The <span className="text-accent">hottest place</span> to be
               <br className="hidden sm:block" />{" "}
               <span className="text-muted">in the next years</span> to come.
             </h1>
@@ -273,10 +305,10 @@ export default async function Home() {
           <div className="mx-auto max-w-6xl">
             <div className="mb-16">
               <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-                Who could move in
+                Early Stage Founders
               </p>
               <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-                The teams you&rsquo;d meet on day one.
+                The People that might move in.
               </h2>
             </div>
             <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -340,17 +372,6 @@ export default async function Home() {
                 Meet them ↗
               </a>
             </p>
-          </div>
-        </section>
-
-        {/* ——— Access pull-quote ——— */}
-        <section className="px-6 py-28">
-          <div className="mx-auto max-w-4xl">
-            
-            <blockquote className="mt-8 border-l-2 border-accent pl-8 text-balance text-3xl font-medium leading-[1.2] tracking-tight text-fg sm:text-4xl sm:leading-[1.15]">
-              Until now, only Unternehmertum had early access.{" "}
-              
-            </blockquote>
           </div>
         </section>
 
@@ -437,6 +458,19 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* ——— Access pull-quote ——— */}
+        <section className="px-6 py-28 sm:py-36">
+          <div className="mx-auto w-full max-w-5xl">
+            <blockquote className="text-balance text-[clamp(2rem,5.5vw,4.5rem)] font-medium leading-[1] tracking-[-0.03em] text-fg">
+              It&apos;s your choice.
+              <br className="hidden sm:block" />{" "}
+              <span className="text-muted">Spend 7.5k on a sponsored dinner</span>
+              <br className="hidden sm:block" />{" "}
+              or gain access to <span className="text-accent">Munich&apos;s hottest</span> new incubation space.
+            </blockquote>
+          </div>
+        </section>
+
         {/* ——— Footer ——— */}
         <footer className="border-t border-hairline px-6 py-10">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
@@ -497,9 +531,11 @@ export default async function Home() {
             className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"
           />
           <h2 className="text-balance text-[26px] font-medium leading-[1.1] tracking-[-0.02em] text-fg sm:text-[28px]">
-            Four tickets.{" "}
-            <span className="text-muted"><br></br>Four Gateways to our Community.</span>
-
+            {spotsWord(spotsAvailable)} {spotsAvailable === 1 ? "ticket" : "tickets"} left.{" "}
+            <span className="text-muted">
+              <br />
+              {spotsWord(spotsAvailable)} {spotsAvailable === 1 ? "Gateway" : "Gateways"} to our Community.
+            </span>
           </h2>
 
           <div className="mt-6 flex items-baseline gap-2">
@@ -575,6 +611,11 @@ function LinkedInPost({ postId, title }: { postId: string; title: string }) {
       className="block h-[540px] w-full rounded-xl border border-hairline bg-surface-2"
     />
   );
+}
+
+function spotsWord(n: number): string {
+  const words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+  return words[n] ?? String(n);
 }
 
 function Dot() {

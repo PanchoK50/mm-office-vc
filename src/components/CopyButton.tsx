@@ -26,17 +26,11 @@ export function CopyButton({
       type="button"
       onClick={handleCopy}
       aria-label={`Copy ${label}`}
-      className="group inline-flex items-center gap-1.5 rounded-md border border-hairline bg-surface-2 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-muted transition hover:border-hairline-strong hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+      title={copied ? "Copied" : `Copy ${label}`}
+      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-muted transition hover:bg-hairline hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
-      <span aria-live="polite" aria-atomic="true" className="min-w-[3ch]">
-        {copied ? "Copied" : "Copy"}
-      </span>
       {copied ? (
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 16 16"
-          className="h-3 w-3 text-accent"
-        >
+        <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3.5 w-3.5 text-accent">
           <path
             fill="none"
             stroke="currentColor"
@@ -47,7 +41,7 @@ export function CopyButton({
           />
         </svg>
       ) : (
-        <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3 w-3">
+        <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3.5 w-3.5">
           <rect
             x="4.5"
             y="4.5"

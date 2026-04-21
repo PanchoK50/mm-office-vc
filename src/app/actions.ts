@@ -19,12 +19,17 @@ export async function submitClaim(
 ): Promise<ClaimResult> {
   const name = (formData.get("name") as string | null)?.trim();
   const email = (formData.get("email") as string | null)?.trim();
-  const phone = (formData.get("phone") as string | null)?.trim() || null;
+  const phone = (formData.get("phone") as string | null)?.trim();
+  const fundName =
+    (formData.get("fund_name") as string | null)?.trim() || null;
   const file = formData.get("file") as File | null;
   const viaWhatsapp = formData.get("via_whatsapp") === "true";
 
-  if (!name || !email) {
-    return { ok: false, error: "Name and email are required." };
+  if (!name || !email || !phone || !fundName) {
+    return {
+      ok: false,
+      error: "Name, email, phone, and fund are required.",
+    };
   }
 
   const hasFile = file && file.size > 0;
@@ -64,7 +69,11 @@ export async function submitClaim(
       .upload(filePath, file, { contentType: file.type, upsert: false });
 
     if (uploadError) {
-      return { ok: false, error: "File upload failed. Please try again." };
+      console.error("[submitClaim] upload failed:", uploadError);
+      return {
+        ok: false,
+        error: `File upload failed: ${uploadError.message}`,
+      };
     }
   }
 
@@ -72,15 +81,20 @@ export async function submitClaim(
     p_name: name,
     p_email: email,
     p_phone: phone,
+    p_fund_name: fundName,
     p_file_path: filePath,
     p_file_name: fileName,
   });
 
   if (rpcError) {
+    console.error("[submitClaim] reserve_spot failed:", rpcError);
     if (rpcError.message?.includes("NO_SPOTS_AVAILABLE")) {
       return { ok: false, error: "All spots are currently taken." };
     }
-    return { ok: false, error: "Something went wrong. Please try again." };
+    return {
+      ok: false,
+      error: `Reservation failed: ${rpcError.message ?? "unknown error"}`,
+    };
   }
 
   return {

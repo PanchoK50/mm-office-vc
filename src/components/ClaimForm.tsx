@@ -109,14 +109,12 @@ export function ClaimForm({ spotsAvailable }: { spotsAvailable: number }) {
 
       <label className="flex flex-col gap-2">
         <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-          Phone / WhatsApp{" "}
-          <span className="normal-case tracking-normal text-muted/60">
-            (optional)
-          </span>
+          Phone
         </span>
         <input
           name="phone"
           type="tel"
+          required
           disabled={disabled || isPending}
           placeholder="+49 170 1234567"
           className="rounded-lg border border-hairline bg-surface-2/60 px-4 py-3 text-[15px] text-fg placeholder:text-muted/40 transition focus:border-accent focus:outline-none disabled:opacity-50"
