@@ -316,7 +316,7 @@ export default async function Home() {
                   className="overflow-hidden rounded-3xl border border-hairline bg-surface"
                 >
                   <Image
-                    src={`/space${n}.HEIC`}
+                    src={`/space${n}.jpg`}
                     alt={`Office space ${n}`}
                     width={2390}
                     height={1792}
