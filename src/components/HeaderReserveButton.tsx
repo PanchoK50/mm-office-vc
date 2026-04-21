@@ -19,5 +19,12 @@ export function HeaderReserveButton() {
   const active =
     "bg-accent text-[#0b0b0f] hover:brightness-110";
 
-  return;
+  return (
+    <a
+      href="#reserve"
+      className={`${base} ${scrolled ? active : idle}`}
+    >
+      Reserve a space
+    </a>
+  );
 }

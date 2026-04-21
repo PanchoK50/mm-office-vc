@@ -288,11 +288,20 @@ export default async function Home() {
                       className="object-cover transition duration-500 group-hover:scale-[1.03]"
                     />
                     <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent" />
-                    <span className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/40 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-accent backdrop-blur-sm">
-                      {j.tag}
-                    </span>
+                    <div className="absolute right-4 top-4 overflow-hidden rounded-lg shadow-lg">
+                      <Image
+                        src={j.logo}
+                        alt={j.tag}
+                        width={32}
+                        height={32}
+                        className="h-8 w-8 object-cover"
+                      />
+                    </div>
                   </div>
                   <div className="flex flex-1 flex-col gap-3 p-6">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
+                      {j.tag}
+                    </span>
                     <h3 className="text-xl font-medium tracking-tight text-fg">
                       {j.name}
                     </h3>
@@ -300,22 +309,15 @@ export default async function Home() {
                       {j.line}
                     </p>
                     <div className="mt-auto pt-3">
-                      {j.linkedin.kind === "post" ? (
-                        <LinkedInPost
-                          postId={j.linkedin.postId}
-                          title={`${j.name} — LinkedIn post`}
-                        />
-                      ) : (
-                        <a
-                          href={j.linkedin.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-md border border-hairline px-4 py-2 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-                        >
-                          View on LinkedIn
-                          <span aria-hidden="true">↗</span>
-                        </a>
-                      )}
+                      <a
+                        href={j.linkedin.kind === "profile" ? j.linkedin.url : `https://www.linkedin.com/feed/update/urn:li:activity:${j.linkedin.postId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-md border border-hairline px-4 py-2 text-xs font-medium tracking-wide text-fg transition hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+                      >
+                        View on LinkedIn
+                        <span aria-hidden="true">↗</span>
+                      </a>
                     </div>
                   </div>
                 </li>
@@ -504,12 +506,18 @@ export default async function Home() {
         {/* ——— Footer ——— */}
         <footer className="border-t border-hairline px-6 py-10">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-            <span>
+            <span className="flex flex-wrap items-center gap-x-4 gap-y-1">
               <a
                 href="mailto:felix.hadasch@manageandmore.de"
                 className="hover:text-fg"
               >
                 felix.hadasch@manageandmore.de
+              </a>
+              <a
+                href="tel:+491608340629"
+                className="hover:text-fg"
+              >
+                +49 160 8340629
               </a>
             </span>
             <nav className="flex items-center gap-5">
