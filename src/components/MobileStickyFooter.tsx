@@ -7,7 +7,7 @@ export function MobileStickyFooter({
 }: {
   spotsAvailable: number;
 }) {
-  const [reserveVisible, setReserveVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
@@ -19,20 +19,15 @@ export function MobileStickyFooter({
   }, []);
 
   useEffect(() => {
-    const el = document.getElementById("reserve");
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setReserveVisible(entry.isIntersecting),
-      { threshold: 0.1 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+    const onScroll = () => setVisible(window.scrollY > 600);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   if (isDesktop) return null;
 
-  const hidden = reserveVisible;
+  const hidden = !visible;
   const label =
     spotsAvailable === 0
       ? "All spots taken"
@@ -40,10 +35,9 @@ export function MobileStickyFooter({
 
   return (
     <div
-      className={`fixed inset-x-0 z-40 lg:hidden transition-transform duration-300 ${
+      className={`fixed inset-x-0 bottom-0 z-40 lg:hidden transition-transform duration-300 ${
         hidden ? "translate-y-full" : "translate-y-0"
       }`}
-      style={{ bottom: 0 }}
     >
       <div
         className="border-t border-black/10 bg-white px-5 py-3 shadow-[0_-4px_24px_-6px_rgba(0,0,0,0.15)]"

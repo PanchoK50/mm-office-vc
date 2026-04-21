@@ -192,8 +192,96 @@ export default async function Home() {
           </div>
         </section>
 
- 
- 
+        {/* ——— Reserve side panel (hovering on lg+, inline on mobile) ——— */}
+        <aside
+          id="reserve"
+          aria-label="Secure your access"
+          className="reserve-panel scroll-mt-24 mx-6 mb-20 mt-4 overflow-hidden rounded-2xl border border-hairline-strong bg-white shadow-[0_24px_70px_-24px_rgba(0,0,0,0.45)] lg:mb-0 lg:mt-0"
+        >
+          <div className="relative px-7 pb-6 pt-4 sm:px-9 sm:pb-7 sm:pt-5">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"
+            />
+            <h2 className="text-balance text-[26px] font-medium leading-[1.1] tracking-[-0.02em] text-fg sm:text-[28px]">
+              {spotsWord(spotsAvailable)} {spotsAvailable === 1 ? "ticket" : "tickets"} left.{" "}
+              <span className="text-muted">
+                <br />
+                {spotsWord(spotsAvailable)} {spotsAvailable === 1 ? "Gateway" : "Gateways"} to our Community.
+              </span>
+            </h2>
+
+            <div className="mt-6 flex items-baseline gap-2">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
+                €
+              </span>
+              <span className="text-[44px] font-medium leading-none tracking-[-0.03em] text-fg sm:text-5xl">
+                {price}
+              </span>
+              <span className="text-sm text-muted">/ year</span>
+            </div>
+        
+          </div>
+
+          <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
+            <SpaceCounter spots={spots} compact />
+          </div>
+
+          <div className="px-7 pb-6 sm:px-9 sm:pb-7">
+            <ReserveDialog spotsAvailable={spotsAvailable} price={price} />
+          </div>
+
+          {/* ——— Officethon module ——— */}
+          <div className="border-t-4 border-hairline-strong px-7 pt-6 sm:px-9 sm:pt-7">
+            <p className="text-lg font-semibold tracking-tight text-fg">
+              Our Office Fundraising:
+            </p>
+          </div>
+          <div className="px-7 pb-6 sm:px-9 sm:pb-7">
+            <OfficeRaisedTotal
+              totalRaised={office.total}
+              totalGoal={OFFICE_FUNDRAISING_GOAL}
+            />
+          </div>
+
+          {office.recent.length > 0 ? (
+            <div className="border-t border-hairline bg-surface-2/40 px-7 py-6 sm:px-9 sm:py-7">
+              <OfficeRecentDonations donations={office.recent} />
+            </div>
+          ) : null}
+
+          <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+              Bank details
+            </p>
+            <dl className="mt-4 space-y-3 text-sm">
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
+                  Account holder
+                </dt>
+                <dd className="mt-1 text-fg">{BANK_DETAILS.accountHolder}</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
+                  IBAN
+                </dt>
+                <dd className="mt-1 font-mono text-fg">{BANK_DETAILS.iban}</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
+                  BIC
+                </dt>
+                <dd className="mt-1 font-mono text-fg">{BANK_DETAILS.bic}</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
+                  Reference
+                </dt>
+                <dd className="mt-1 text-fg">{BANK_DETAILS.reference}</dd>
+              </div>
+            </dl>
+          </div>
+        </aside>
 
         {/* ——— What you get ——— */}
         <section className="px-6 py-28 sm:py-36">
@@ -581,97 +669,6 @@ export default async function Home() {
           </div>
         </footer>
       </main>
-
-      {/* ——— Reserve side panel (hovering on lg+, inline on mobile) ——— */}
-      <aside
-        id="reserve"
-        aria-label="Secure your access"
-        className="reserve-panel scroll-mt-24 mx-6 mb-20 mt-4 overflow-hidden rounded-2xl border border-hairline-strong bg-white shadow-[0_24px_70px_-24px_rgba(0,0,0,0.45)]"
-      >
-        <div className="relative px-7 pb-6 pt-4 sm:px-9 sm:pb-7 sm:pt-5">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"
-          />
-          <h2 className="text-balance text-[26px] font-medium leading-[1.1] tracking-[-0.02em] text-fg sm:text-[28px]">
-            {spotsWord(spotsAvailable)} {spotsAvailable === 1 ? "ticket" : "tickets"} left.{" "}
-            <span className="text-muted">
-              <br />
-              {spotsWord(spotsAvailable)} {spotsAvailable === 1 ? "Gateway" : "Gateways"} to our Community.
-            </span>
-          </h2>
-
-          <div className="mt-6 flex items-baseline gap-2">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
-              €
-            </span>
-            <span className="text-[44px] font-medium leading-none tracking-[-0.03em] text-fg sm:text-5xl">
-              {price}
-            </span>
-            <span className="text-sm text-muted">/ year</span>
-          </div>
-      
-        </div>
-
-        <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
-          <SpaceCounter spots={spots} compact />
-        </div>
-
-        <div className="px-7 pb-6 sm:px-9 sm:pb-7">
-          <ReserveDialog spotsAvailable={spotsAvailable} price={price} />
-        </div>
-
-        {/* ——— Officethon module ——— */}
-        <div className="border-t-4 border-hairline-strong px-7 pt-6 sm:px-9 sm:pt-7">
-          <p className="text-lg font-semibold tracking-tight text-fg">
-            Our Office Fundraising:
-          </p>
-        </div>
-        <div className="px-7 pb-6 sm:px-9 sm:pb-7">
-          <OfficeRaisedTotal
-            totalRaised={office.total}
-            totalGoal={OFFICE_FUNDRAISING_GOAL}
-          />
-        </div>
-
-        {office.recent.length > 0 ? (
-          <div className="border-t border-hairline bg-surface-2/40 px-7 py-6 sm:px-9 sm:py-7">
-            <OfficeRecentDonations donations={office.recent} />
-          </div>
-        ) : null}
-
-        <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-            Bank details
-          </p>
-          <dl className="mt-4 space-y-3 text-sm">
-            <div>
-              <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
-                Account holder
-              </dt>
-              <dd className="mt-1 text-fg">{BANK_DETAILS.accountHolder}</dd>
-            </div>
-            <div>
-              <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
-                IBAN
-              </dt>
-              <dd className="mt-1 font-mono text-fg">{BANK_DETAILS.iban}</dd>
-            </div>
-            <div>
-              <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
-                BIC
-              </dt>
-              <dd className="mt-1 font-mono text-fg">{BANK_DETAILS.bic}</dd>
-            </div>
-            <div>
-              <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
-                Reference
-              </dt>
-              <dd className="mt-1 text-fg">{BANK_DETAILS.reference}</dd>
-            </div>
-          </dl>
-        </div>
-      </aside>
 
       <MobileStickyFooter spotsAvailable={spotsAvailable} />
     </>
