@@ -96,6 +96,41 @@ export default async function Home() {
 
   const price = PRICE_PER_SPACE.toLocaleString("de-DE");
 
+  const benefits = [
+    {
+      title: "Brand one of our Incubation Rooms",
+      body: (
+        <>A dedicated room named after your fund for twelve months, where our top incubated startups build every day.</>
+      ),
+    },
+    {
+      title: "Jury at our Demo Day.",
+      body: (
+        <>You will be part of the jury at our Demo Day, where our top incubated startups pitch.</>
+      ),
+    },
+    {
+      title: "Jury at Hackathon.",
+      body: (
+        <>
+          You will be part of the jury at our Hackathon.{" "}
+          <a
+            href={`https://www.linkedin.com/feed/update/urn:li:activity:${HACK_NATION_POST_ID}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-black underline decoration-black/30 underline-offset-4 transition hover:text-accent hover:decoration-accent"
+          >
+            See our last hackathon ↗
+          </a>
+        </>
+      ),
+    },
+    {
+      title: "Fixed spot in our curriculum.",
+      body: <>You will meet every new MM scholar at least once.</>,
+    },
+  ];
+
   return (
     <>
       {/* ——— Nav ——— */}
@@ -190,48 +225,45 @@ export default async function Home() {
               </p>
             </div>
 
-            <ul className="grid gap-px overflow-hidden rounded-3xl bg-black/10 ring-1 ring-white/15 shadow-[0_40px_120px_-30px_rgba(255,255,255,0.35)] md:grid-cols-2">
-              <li className="flex flex-col gap-6 bg-white p-8 sm:p-10 lg:p-12">
-                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-black sm:text-3xl">
-                  Brand one of our Incubation Rooms
-                </p>
-                <p className="mt-auto text-[15px] leading-[1.55] text-black/70">
-                  A dedicated room named after your fund for twelve months, where our top incubated startups build every day.
-                </p>
-              </li>
-              <li className="flex flex-col gap-6 bg-white p-8 sm:p-10 lg:p-12">
-                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-black sm:text-3xl">
-                  Jury at our Demo Day.
-                </p>
-                <p className="mt-auto text-[15px] leading-[1.55] text-black/70">
-                  You will be part of the jury at our Demo Day, where our top incubated startups pitch.
-                </p>
-              </li>
-              <li className="flex flex-col gap-6 bg-white p-8 sm:p-10 lg:p-12">
-                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-black sm:text-3xl">
-                  Jury at Hackathon.
-                </p>
-                <p className="mt-auto text-[15px] leading-[1.55] text-black/70">
-                  You will be part of the jury at our Hackathon.{" "}
-                  <a
-                    href={`https://www.linkedin.com/feed/update/urn:li:activity:${HACK_NATION_POST_ID}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-black underline decoration-black/30 underline-offset-4 transition hover:text-accent hover:decoration-accent"
+            <div className="benefits-halo relative">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-x-10 -inset-y-16 -z-10 bg-[radial-gradient(50%_60%_at_20%_20%,rgba(0,162,204,0.18)_0%,transparent_70%),radial-gradient(45%_55%_at_85%_80%,rgba(0,162,204,0.14)_0%,transparent_70%)] blur-2xl"
+              />
+              <ul className="grid gap-6 md:grid-cols-2">
+                {benefits.map((b) => (
+                  <li
+                    key={b.title}
+                    className="benefit-card group relative overflow-hidden rounded-3xl p-[1.5px] shadow-[0_30px_90px_-30px_rgba(0,162,204,0.55),0_0_60px_-10px_rgba(255,255,255,0.35),0_0_0_1px_rgba(255,255,255,0.08)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_40px_120px_-24px_rgba(0,162,204,0.8),0_0_90px_-10px_rgba(255,255,255,0.55),0_0_0_1px_rgba(255,255,255,0.18)]"
                   >
-                    See our last hackathon ↗
-                  </a>
-                </p>
-              </li>
-              <li className="flex flex-col gap-6 bg-white p-8 sm:p-10 lg:p-12">
-                <p className="text-2xl font-medium leading-[1.2] tracking-tight text-black sm:text-3xl">
-                  Fixed spot in our curriculum.
-                </p>
-                <p className="mt-auto text-[15px] leading-[1.55] text-black/70">
-                  You will meet every new MM scholar at least once.
-                </p>
-              </li>
-            </ul>
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-3xl bg-[conic-gradient(from_140deg_at_50%_50%,rgba(0,162,204,0.65),rgba(255,255,255,0.9)_25%,rgba(0,162,204,0.45)_55%,rgba(255,255,255,0.9)_80%,rgba(0,162,204,0.65))] opacity-80 transition duration-500 group-hover:opacity-100"
+                    />
+                    <div className="relative flex h-full flex-col rounded-[calc(1.5rem-1.5px)] bg-white px-8 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-14">
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -inset-x-10 -top-24 h-40 bg-[radial-gradient(closest-side,rgba(0,162,204,0.22),transparent_70%)] opacity-0 transition duration-500 group-hover:opacity-100"
+                      />
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(0,162,204,0.55),transparent)]"
+                      />
+                      <h3 className="relative text-[26px] font-medium leading-[1.15] tracking-[-0.015em] text-black sm:text-[30px]">
+                        {b.title}
+                      </h3>
+                      <div
+                        aria-hidden="true"
+                        className="relative mt-6 h-px w-10 bg-accent/60 transition-all duration-500 group-hover:w-16 group-hover:bg-accent"
+                      />
+                      <p className="relative mt-6 max-w-[38ch] text-[15px] leading-[1.65] text-black/65">
+                        {b.body}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
 
@@ -261,6 +293,70 @@ export default async function Home() {
                 className="h-auto w-full rounded-xl"
               />
             </div>
+          </div>
+        </section>
+
+        {/* ——— The space ——— */}
+        <section className="border-t border-hairline bg-surface/30 px-6 py-28 sm:py-36">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-12 max-w-3xl">
+              <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+                The space
+              </p>
+              <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
+                How it looks{" "}
+                <span className="text-muted">today.</span>
+              </h2>
+            </div>
+
+            <ul className="grid gap-6 sm:grid-cols-2">
+              {[1, 2, 3, 4].map((n) => (
+                <li
+                  key={n}
+                  className="overflow-hidden rounded-3xl border border-hairline bg-surface"
+                >
+                  <Image
+                    src={`/space${n}.HEIC`}
+                    alt={`Office space ${n}`}
+                    width={2390}
+                    height={1792}
+                    className="h-auto w-full"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* ——— Vision ——— */}
+        <section className="border-t border-hairline px-6 py-28 sm:py-36">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-12 max-w-3xl">
+              <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
+                Vision
+              </p>
+              <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
+                How it will look{" "}
+                <span className="text-muted">once teams move in.</span>
+              </h2>
+            </div>
+
+            <ul className="grid gap-6 sm:grid-cols-2">
+              {[1, 2, 3, 4].map((n) => (
+                <li
+                  key={n}
+                  className="overflow-hidden rounded-3xl border border-hairline bg-surface"
+                >
+                  <Image
+                    src={`/Office${n}.png`}
+                    alt={`Office vision ${n}`}
+                    width={2390}
+                    height={1792}
+                    className="h-auto w-full"
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -545,7 +641,7 @@ export default async function Home() {
             <span className="text-[44px] font-medium leading-none tracking-[-0.03em] text-fg sm:text-5xl">
               {price}
             </span>
-            <span className="text-sm text-muted">/ space</span>
+            <span className="text-sm text-muted">/ year</span>
           </div>
       
         </div>
@@ -559,7 +655,12 @@ export default async function Home() {
         </div>
 
         {/* ——— Officethon module ——— */}
-        <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
+        <div className="border-t-4 border-hairline-strong px-7 pt-6 sm:px-9 sm:pt-7">
+          <p className="text-lg font-semibold tracking-tight text-fg">
+            Our Office Fundraising:
+          </p>
+        </div>
+        <div className="px-7 pb-6 sm:px-9 sm:pb-7">
           <OfficeRaisedTotal
             totalRaised={office.total}
             totalGoal={OFFICE_FUNDRAISING_GOAL}
@@ -571,6 +672,42 @@ export default async function Home() {
             <OfficeRecentDonations donations={office.recent} />
           </div>
         ) : null}
+
+        <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+            Bank details
+          </p>
+          <dl className="mt-4 space-y-3 text-sm">
+            <div>
+              <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
+                Account holder
+              </dt>
+              <dd className="mt-1 text-fg">
+                Stiftung Thomas Kirchner Bildungsförderungs gGmbH
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
+                IBAN
+              </dt>
+              <dd className="mt-1 font-mono text-fg">
+                DE46 3003 0900 1050 6926 21
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
+                BIC
+              </dt>
+              <dd className="mt-1 font-mono text-fg">MEFIDEMM300</dd>
+            </div>
+            <div>
+              <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
+                Reference
+              </dt>
+              <dd className="mt-1 text-fg">Spende Manage and More Büro</dd>
+            </div>
+          </dl>
+        </div>
       </aside>
     </>
   );
