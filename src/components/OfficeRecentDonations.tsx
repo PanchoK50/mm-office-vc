@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+const GREEN = "#34d399";
+
 export type OfficeDonationView = {
   id: number;
   donor_name: string;
@@ -9,6 +11,14 @@ export type OfficeDonationView = {
   generation: string | null;
   created_at: string;
 };
+
+function formatEUR(n: number): string {
+  return new Intl.NumberFormat("de-DE", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 0,
+  }).format(n);
+}
 
 function formatTimeAgo(iso: string, now: Date): string {
   const then = new Date(iso).getTime();
@@ -41,31 +51,52 @@ export function OfficeRecentDonations({
   }, []);
 
   return (
-    <ul className="mt-4 divide-y divide-hairline">
-      {donations.map((d, i) => (
-        <li
-          key={d.id}
-          className="fade-in-up flex items-center justify-between gap-3 py-2.5 first:pt-0 last:pb-0"
-          style={{ animationDelay: `${i * 80}ms` }}
-        >
-          <div className="min-w-0">
-            <p className="truncate text-[14px] font-medium leading-tight text-fg">
-              {d.donor_name || "Anonym"}
-              {d.generation ? (
-                <span className="ml-1.5 font-mono text-[11px] font-normal text-muted">
-                  · {d.generation}
-                </span>
-              ) : null}
-            </p>
-            <p className="mt-0.5 text-[11px] text-muted tabular-nums">
-              {now ? formatTimeAgo(d.created_at, now) : "\u00a0"}
-            </p>
-          </div>
-          <span className="font-mono text-[15px] font-medium tabular-nums text-accent">
-            €{d.amount.toLocaleString("de-DE")}
-          </span>
-        </li>
-      ))}
-    </ul>
+    <div className="space-y-2.5">
+      <div className="flex items-center gap-2">
+        <span className="relative flex h-1.5 w-1.5">
+          <span
+            className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
+            style={{ backgroundColor: GREEN }}
+          />
+          <span
+            className="relative inline-flex h-1.5 w-1.5 rounded-full"
+            style={{ backgroundColor: GREEN }}
+          />
+        </span>
+        <h4 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
+          Live donations
+        </h4>
+      </div>
+
+      {donations.length === 0 ? (
+        <p className="text-xs text-muted">No donations yet. Be the first.</p>
+      ) : (
+        <ul className="space-y-2">
+          {donations.map((d) => (
+            <li
+              key={d.id}
+              className="flex items-center justify-between gap-3 text-sm"
+            >
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium leading-tight text-fg">
+                  {d.donor_name || "Anonym"}
+                  {d.generation && (
+                    <span className="ml-1.5 text-[11px] font-normal text-muted">
+                      · {d.generation}
+                    </span>
+                  )}
+                </p>
+                <p className="mt-0.5 text-[11px] text-muted">
+                  {now ? formatTimeAgo(d.created_at, now) : "\u00a0"}
+                </p>
+              </div>
+              <span className="shrink-0 text-sm font-semibold tabular-nums text-fg">
+                {d.amount === 0 ? "? €" : formatEUR(d.amount)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

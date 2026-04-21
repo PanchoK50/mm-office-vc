@@ -43,7 +43,7 @@ export function ReserveDialog({
         className="group relative flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-md bg-[#00a2cc] text-sm font-semibold tracking-wide text-[#0b0b0f] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00a2cc] focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:brightness-100"
       >
         <span>
-          {disabled ? "All spots taken" : "Reserve a space"}
+          {disabled ? "All spots taken" : "Secure your access"}
         </span>
         {!disabled && (
           <svg
@@ -68,7 +68,7 @@ export function ReserveDialog({
             <div
               role="dialog"
               aria-modal="true"
-              aria-label="Reserve a space"
+              aria-label="Secure your access"
               className="reserve-dialog fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-3 backdrop-blur-sm sm:p-4"
               onClick={() => setOpen(false)}
             >
@@ -79,7 +79,7 @@ export function ReserveDialog({
                 <div className="flex items-start justify-between gap-4 px-5 pt-5 sm:px-7 sm:pt-6">
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
-                      Reserve a space
+                      Secure your access
                     </p>
                     <h3 className="mt-1.5 text-balance text-[19px] font-medium leading-[1.2] tracking-[-0.015em] text-fg sm:text-[22px]">
                       Wire €{price} &mdash; then confirm below.

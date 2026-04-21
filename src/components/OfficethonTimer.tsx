@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const START_MS = Date.parse("2026-04-19T13:00:00+02:00");
+const START_MS = Date.parse("2026-04-19T14:30:00+02:00");
 
 function format(diffMs: number) {
   const total = Math.max(0, Math.floor(diffMs / 1000));

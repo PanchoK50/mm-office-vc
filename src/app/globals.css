@@ -168,7 +168,7 @@ body {
   .reserve-panel {
     position: fixed;
     top: 6rem;
-    right: 1rem;
+    right: 2.5rem;
     z-index: 30;
     width: 400px;
     max-height: calc(100vh - 7.5rem);

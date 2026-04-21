@@ -17,14 +17,7 @@ export function SpaceCounter({
 
   return (
     <div className={compact ? "space-y-3" : "space-y-5"}>
-      <div className="flex items-baseline justify-between gap-4">
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-          Spaces
-        </span>
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
-          {remaining} of {slotStatuses.length} remaining
-        </span>
-      </div>
+      
       <div
         className={`grid gap-2 ${compact ? "grid-cols-4" : "grid-cols-2 sm:grid-cols-4"}`}
         role="list"
@@ -35,13 +28,10 @@ export function SpaceCounter({
             key={i}
             role="listitem"
             aria-label={`Space ${i + 1} ${statusLabel(status).toLowerCase()}`}
-            className={`relative flex aspect-[4/3] items-end justify-start rounded-lg border p-3 ${statusStyle(status)}`}
+            className={`relative flex aspect-[4/3] items-center justify-center rounded-lg border p-3 ${statusStyle(status)}`}
           >
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
-              {String(i + 1).padStart(2, "0")}
-            </span>
             <span
-              className={`absolute right-3 top-3 font-mono text-[10px] uppercase tracking-[0.18em] ${statusColor(status)}`}
+              className={`font-mono text-[10px] uppercase tracking-[0.18em] ${statusColor(status)}`}
             >
               {statusLabel(status)}
             </span>

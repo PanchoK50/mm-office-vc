@@ -2,7 +2,6 @@ import Image from "next/image";
 import { HeaderReserveButton } from "@/components/HeaderReserveButton";
 import { OfficeRaisedTotal } from "@/components/OfficeRaisedTotal";
 import { OfficeRecentDonations } from "@/components/OfficeRecentDonations";
-import { OfficethonTimer } from "@/components/OfficethonTimer";
 import { ReserveDialog } from "@/components/ReserveDialog";
 import { SpaceCounter, type SpotStatus } from "@/components/SpaceCounter";
 import { FloatingPaths } from "@/components/ui/background-paths";
@@ -20,6 +19,11 @@ import {
 } from "@/content/data";
 
 export const revalidate = 30;
+
+/* Officethon goal = KAUTION (15_536.01) + sum of room sponsorGoals
+   (19_093.93 + 19_325.70 + 14_351.11 + 17_867.28 + 18_208.00).
+   Mirrors FUNDRAISING_GOAL in the officethon repo. */
+const OFFICE_FUNDRAISING_GOAL = 104_382.03;
 
 async function getSpots(): Promise<SpotStatus[]> {
   const supabase = createServerClient();
@@ -53,7 +57,7 @@ async function getOfficeDonations(): Promise<{
 
   const list = (data ?? []) as (OfficeDonation & { status: string })[];
   const total = list.reduce((sum, d) => sum + (d.amount ?? 0), 0);
-  return { total, recent: list.slice(0, 5) };
+  return { total, recent: list.slice(0, 3) };
 }
 
 export default async function Home() {
@@ -95,10 +99,13 @@ export default async function Home() {
 
       <main id="top" className="relative flex flex-col lg:pr-[440px]">
         {/* ——— Hero ——— */}
-        <section className="relative isolate flex min-h-screen flex-col justify-center overflow-hidden px-6 pb-28 pt-32 sm:pt-36 lg:pt-40 grain">
-          <div className="mesh absolute inset-0 -z-10" aria-hidden="true" />
+        <section className="relative isolate flex min-h-screen flex-col justify-center overflow-hidden lg:overflow-visible px-6 pb-28 pt-32 sm:pt-36 lg:pt-40 grain">
           <div
-            className="absolute inset-0 -z-10 rotate-180 opacity-60"
+            className="mesh absolute inset-y-0 left-0 right-0 lg:right-[-440px] -z-10"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute inset-y-0 left-0 right-0 lg:right-[-440px] -z-10 rotate-180 opacity-60"
             aria-hidden="true"
           >
             <FloatingPaths position={1} />
@@ -126,25 +133,28 @@ export default async function Home() {
         <section className="px-6 py-28 sm:py-36">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent">
-                What you get
-              </p>
               <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
                 We&rsquo;re building an incubator{" "}
                 <span className="text-muted">for our best startups.</span>
               </h2>
               <p className="mt-6 text-lg leading-[1.55] text-muted">
-                Office space in Munich&rsquo;s best location, free for
-                the teams we back, so they can accelerate without the overhead.
+                Manage and More is opening an office, and our best startups will move in. Office space in Munich&rsquo;s best location, free for
+                the best teams, so they can accelerate without the overhead.
+              </p>
+              <p className="mt-6 text-lg leading-[1.55] text-muted">
+                <a
+                  href="https://officethon.mm-app.de"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fg underline decoration-hairline-strong underline-offset-4 transition hover:text-accent hover:decoration-accent"
+                >
+                  Learn more about the Officethon ↗
+                </a>
               </p>
 
-              <p className="mt-8 text-balance text-2xl font-medium leading-[1.3] tracking-[-0.01em] text-fg sm:text-3xl">
-                <span className="text-accent">€{price}</span> per space.{" "}
-                <span className="text-accent">Four</span> spaces. Your spot is
-                assigned{" "}
-                <span className="text-muted">
-                  the moment the wire lands.
-                </span>
+              <p className="mt-60 text-balance text-2xl font-medium leading-[1.3] tracking-[-0.01em] text-fg sm:text-3xl">
+                <span className="text-accent">You</span> will be branding a Room.{" "}
+                <span className="text-accent">One of Four</span> spaces. First Come First Serve.
               </p>
             </div>
 
@@ -255,27 +265,13 @@ export default async function Home() {
         {/* ——— Who moves in (joiners) ——— */}
         <section className="border-t border-hairline px-6 py-28">
           <div className="mx-auto max-w-6xl">
-            <div className="mb-16 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
-                  Who could move in
-                </p>
-                <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-                  The teams you&rsquo;d meet on day one.
-                </h2>
-              </div>
-              <p className="max-w-sm text-sm leading-[1.6] text-muted">
-                Active generations are already shipping — EWOR, Y Combinator,
-                and more. The incubator is where they&rsquo;d sit.{" "}
-                <a
-                  href="https://www.manageandmore.de/people/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-fg underline decoration-hairline-strong underline-offset-4 transition hover:text-accent hover:decoration-accent"
-                >
-                  See our active generations ↗
-                </a>
+            <div className="mb-16">
+              <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-muted">
+                Who could move in
               </p>
+              <h2 className="mt-4 max-w-2xl text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
+                The teams you&rsquo;d meet on day one.
+              </h2>
             </div>
             <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {JOINERS.map((j) => (
@@ -325,6 +321,17 @@ export default async function Home() {
                 </li>
               ))}
             </ul>
+            <p className="mt-12 max-w-2xl text-lg leading-[1.6] text-muted sm:text-xl">
+              Active generations are already shipping.{" "}
+              <a
+                href="https://www.manageandmore.de/people/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-fg underline decoration-hairline-strong underline-offset-4 transition hover:text-accent hover:decoration-accent"
+              >
+                Meet them ↗
+              </a>
+            </p>
           </div>
         </section>
 
@@ -539,30 +546,22 @@ export default async function Home() {
       {/* ——— Reserve side panel (hovering on lg+, inline on mobile) ——— */}
       <aside
         id="reserve"
-        aria-label="Reserve a space"
-        className="reserve-panel scroll-mt-24 mx-6 mb-20 mt-4 overflow-hidden rounded-3xl border border-black/10 bg-white shadow-[0_24px_70px_-24px_rgba(0,0,0,0.45)]"
+        aria-label="Secure your access"
+        className="reserve-panel scroll-mt-24 mx-6 mb-20 mt-4 overflow-hidden rounded-2xl border border-hairline-strong bg-white shadow-[0_24px_70px_-24px_rgba(0,0,0,0.45)]"
       >
-        <div className="relative p-7 pb-6 sm:p-9 sm:pb-7">
+        <div className="relative px-7 pb-6 pt-4 sm:px-9 sm:pb-7 sm:pt-5">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"
           />
-          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70 opacity-60" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-            </span>
-            Reservation open
-          </div>
+          <h2 className="text-balance text-[26px] font-medium leading-[1.1] tracking-[-0.02em] text-fg sm:text-[28px]">
+            Four tickets.{" "}
+            <span className="text-muted"><br></br>Four Gateways to our Community.</span>
 
-          <h2 className="mt-5 text-balance text-[26px] font-medium leading-[1.1] tracking-[-0.02em] text-fg sm:text-[28px]">
-            Four spaces.{" "}
-            <span className="text-muted"><br></br>First Come First Serve.</span>
-  
           </h2>
 
           <div className="mt-6 flex items-baseline gap-2">
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
               €
             </span>
             <span className="text-[44px] font-medium leading-none tracking-[-0.03em] text-fg sm:text-5xl">
@@ -570,69 +569,27 @@ export default async function Home() {
             </span>
             <span className="text-sm text-muted">/ space</span>
           </div>
-          <p className="mt-3 text-[13.5px] leading-[1.55] text-muted">
-            Your spot is assigned the moment the wire lands.
-          </p>
+      
         </div>
 
         <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
           <SpaceCounter spots={spots} compact />
         </div>
 
-        <div className="border-t border-hairline bg-surface-2/60 px-7 py-6 sm:px-9 sm:py-7">
+        <div className="px-7 pb-6 sm:px-9 sm:pb-7">
           <ReserveDialog spotsAvailable={spotsAvailable} price={price} />
-          <p className="mt-4 text-center text-[11px] leading-[1.55] text-muted">
-            No forms up front. The wire is the confirmation.
-          </p>
         </div>
 
         {/* ——— Officethon module ——— */}
         <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70 opacity-60" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-              </span>
-              Officethon · Live
-            </div>
-            <a
-              href="https://officethon.mm-app.de"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted transition hover:text-accent"
-            >
-              officethon.mm-app.de ↗
-            </a>
-          </div>
-
-          <div className="mt-5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-              Raised for the office
-            </p>
-            <p className="mt-2 flex items-baseline gap-1.5">
-              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-                €
-              </span>
-              <OfficeRaisedTotal amount={office.total} />
-            </p>
-          </div>
-
-          <div className="mt-5 border-t border-hairline pt-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-              Live since 19.04. · 13:00
-            </p>
-            <div className="mt-2">
-              <OfficethonTimer compact />
-            </div>
-          </div>
+          <OfficeRaisedTotal
+            totalRaised={office.total}
+            totalGoal={OFFICE_FUNDRAISING_GOAL}
+          />
         </div>
 
         {office.recent.length > 0 ? (
           <div className="border-t border-hairline bg-surface-2/40 px-7 py-6 sm:px-9 sm:py-7">
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
-              Neuste Spenden
-            </p>
             <OfficeRecentDonations donations={office.recent} />
           </div>
         ) : null}
