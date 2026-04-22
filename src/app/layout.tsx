@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MM Incubator — Brand a Room in Munich's Next Startup Hub",
+  title: "MM Office — Brand a Room in Munich's Next Startup Hub",
   description:
-    "Manage & More is opening an incubator in Maxvorstadt, Munich, and our best startups are moving in. Brand one of four Incubation Rooms for twelve months — €7,500/year — and join the jury at Demo Day and our Hackathon.",
+    "Manage & More is opening an office in Maxvorstadt, Munich, and our best startups are moving in. Brand one of four VC Rooms for twelve months — €7,500/year — and join the jury at Demo Day and our Hackathon.",
 };
 
 export const viewport: Viewport = {

@@ -115,7 +115,7 @@ export function ReserveDialog({
 
   function handleWhatsapp() {
     const text = encodeURIComponent(
-      `Hi, I just wired €${price} for an MM Incubator space. Name: ${name}. Fund: ${fundName}.`,
+      `Hi, I just wired €${price} for an MM Office space. Name: ${name}. Fund: ${fundName}.`,
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
     setConfirmationMethod("whatsapp");

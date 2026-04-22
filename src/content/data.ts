@@ -56,7 +56,7 @@ export const JOINERS: Array<{
   {
     name: "Jochen Madler",
     tag: "YC · Sitefire",
-    line: "Building Sitefire through Y Combinator, a candidate to move into the Incubator.",
+    line: "Building Sitefire through Y Combinator, a candidate to move into the Office.",
     image: "/jochen.jpeg",
     logo: "/Y_Combinator_logo.svg",
     linkedin: {

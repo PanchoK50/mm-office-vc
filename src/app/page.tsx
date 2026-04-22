@@ -101,13 +101,13 @@ export default async function Home() {
     {
       title: "Brand one of our Incubation Rooms",
       body: (
-        <>A dedicated room named after your fund for twelve months, where our top incubated startups build every day.</>
+        <>A dedicated room named after your fund for twelve months, where our top startups build every day.</>
       ),
     },
     {
       title: "Jury at our Demo Day.",
       body: (
-        <>You will be part of the jury at our Demo Day, where our top incubated startups pitch.</>
+        <>You will be part of the jury at our Demo Day, where our top startups pitch.</>
       ),
     },
     {
@@ -141,7 +141,7 @@ export default async function Home() {
             <a
               href="#top"
               className="flex items-center gap-3 text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg rounded"
-              aria-label="Manage and More Incubator"
+              aria-label="Manage and More Office"
             >
               <Image
                 src="/MM_3.png"
@@ -155,7 +155,7 @@ export default async function Home() {
                 aria-hidden="true"
                 className="hidden font-mono text-[11px] uppercase tracking-[0.22em] text-muted sm:inline"
               >
-                <span className="text-accent">·</span>&nbsp;Incubator
+                <span className="text-accent">·</span>&nbsp;Office
               </span>
             </a>
           </div>
@@ -199,7 +199,7 @@ export default async function Home() {
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 max-w-3xl">
               <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-                We&rsquo;re building an incubator{" "}
+                We&rsquo;re building a space{" "}
                 <span className="text-muted">for our best startups.</span>
               </h2>
               <p className="mt-6 text-lg leading-[1.55] text-muted">
@@ -273,7 +273,7 @@ export default async function Home() {
                 Floor plan
               </p>
               <h2 className="mt-4 text-balance text-4xl font-medium leading-[1.05] tracking-[-0.02em] sm:text-5xl">
-                The incubator,{" "}
+                The Office,{" "}
                 <span className="text-muted">from above.</span>
               </h2>
               <p className="mt-6 text-lg leading-[1.55] text-muted">
@@ -285,7 +285,7 @@ export default async function Home() {
             <div className="overflow-hidden rounded-3xl border border-hairline bg-surface p-4 sm:p-8">
               <Image
                 src="/Incuabtion.png"
-                alt="Incubator floor plan"
+                alt="Office floor plan"
                 width={2229}
                 height={1146}
                 className="h-auto w-full rounded-xl"

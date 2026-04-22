@@ -227,7 +227,7 @@ export function ClaimForm({ spotsAvailable }: { spotsAvailable: number }) {
         <p className="text-center text-xs text-muted">
           After submitting, send your confirmation screenshot to{" "}
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I just wired €7,500 for an MM Incubator space.")}`}
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I just wired €7,500 for an MM space.")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-accent underline underline-offset-2 hover:brightness-110"
