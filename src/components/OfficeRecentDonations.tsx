@@ -64,12 +64,12 @@ export function OfficeRecentDonations({
           />
         </span>
         <h4 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">
-          Live donations
+          Live sponsorings
         </h4>
       </div>
 
       {donations.length === 0 ? (
-        <p className="text-xs text-muted">No donations yet. Be the first.</p>
+        <p className="text-xs text-muted">No sponsorings yet. Be the first.</p>
       ) : (
         <ul className="space-y-2">
           {donations.map((d) => (

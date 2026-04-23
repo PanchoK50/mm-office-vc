@@ -11,6 +11,7 @@ const MAX_SIZE = 5 * 1024 * 1024;
 const WHATSAPP_NUMBER = "491608340629";
 
 type Step = 1 | 2;
+type ConfirmationMethod = "upload" | "whatsapp" | "commitment" | null;
 
 export function ReserveDialog({
   spotsAvailable,
@@ -30,9 +31,7 @@ export function ReserveDialog({
 
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState("");
-  const [confirmationMethod, setConfirmationMethod] = useState<
-    "upload" | "whatsapp" | null
-  >(null);
+  const [confirmationMethod, setConfirmationMethod] = useState<ConfirmationMethod>(null);
 
   const [result, setResult] = useState<ClaimResult | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -58,6 +57,14 @@ export function ReserveDialog({
     setOpen(false);
     setTimeout(resetState, 150);
   }
+
+  useEffect(() => {
+    const onExternal = () => {
+      if (!disabled) setOpen(true);
+    };
+    window.addEventListener("open-reserve-dialog", onExternal);
+    return () => window.removeEventListener("open-reserve-dialog", onExternal);
+  }, [disabled]);
 
   useEffect(() => {
     if (!open) return;
@@ -115,7 +122,7 @@ export function ReserveDialog({
 
   function handleWhatsapp() {
     const text = encodeURIComponent(
-      `Hi, I just wired €${price} for an MM Office space. Name: ${name}. Fund: ${fundName}.`,
+      `Hi, I'd like to confirm my sponsoring for an MM Office space. Name: ${name}. Fund: ${fundName}.`,
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
     setConfirmationMethod("whatsapp");
@@ -127,7 +134,7 @@ export function ReserveDialog({
   function handleFinalConfirm() {
     setStepError("");
     if (!confirmationMethod) {
-      setStepError("Upload a confirmation or choose the WhatsApp option.");
+      setStepError("Please choose one of the options below.");
       return;
     }
     const fd = new FormData();
@@ -137,6 +144,7 @@ export function ReserveDialog({
     fd.set("fund_name", fundName);
     if (file) fd.set("file", file);
     if (confirmationMethod === "whatsapp") fd.set("via_whatsapp", "true");
+    if (confirmationMethod === "commitment") fd.set("commitment_only", "true");
 
     startTransition(async () => {
       const res = await submitClaim(fd);
@@ -358,10 +366,10 @@ export function ReserveDialog({
                           Step 2 of 2
                         </p>
                         <h2 className="mt-1.5 text-xl font-semibold tracking-tight text-fg sm:text-2xl">
-                          Wire €{price} &amp; confirm
+                          Confirm your sponsoring
                         </h2>
                         <p className="mt-1 text-sm text-muted">
-                          Your spot is claimed once you confirm below.
+                          You can wire now or just commit — payment can follow later.
                         </p>
                       </div>
 
@@ -377,7 +385,7 @@ export function ReserveDialog({
                       {/* Confirmation methods */}
                       <div className="space-y-2.5">
                         <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
-                          Confirm your transfer
+                          How would you like to proceed?
                         </p>
 
                         <label
@@ -492,6 +500,71 @@ export function ReserveDialog({
                             Send screenshot via WhatsApp
                           </span>
                           {confirmationMethod === "whatsapp" && (
+                            <span className="text-[11px] font-semibold uppercase tracking-wider text-accent">
+                              Selected
+                            </span>
+                          )}
+                        </button>
+
+                        <div className="flex items-center gap-3 py-1">
+                          <div className="h-px flex-1 bg-hairline" />
+                          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted/60">
+                            or
+                          </span>
+                          <div className="h-px flex-1 bg-hairline" />
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setConfirmationMethod("commitment");
+                            setFile(null);
+                            setFileError("");
+                            if (fileInputRef.current) fileInputRef.current.value = "";
+                          }}
+                          disabled={isPending}
+                          className={`flex min-h-[56px] w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-sm font-medium transition-colors ${
+                            confirmationMethod === "commitment"
+                              ? "border-accent bg-accent/5 text-fg"
+                              : "border-hairline bg-surface-2/40 text-fg hover:bg-surface-2"
+                          }`}
+                        >
+                          <span
+                            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
+                              confirmationMethod === "commitment"
+                                ? "bg-accent text-[#0b0b0f]"
+                                : "bg-surface-2 text-muted"
+                            }`}
+                            aria-hidden="true"
+                          >
+                            {confirmationMethod === "commitment" ? (
+                              <svg viewBox="0 0 16 16" className="h-5 w-5">
+                                <path
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M3 8.5l3.5 3.5L13 5"
+                                />
+                              </svg>
+                            ) : (
+                              <svg viewBox="0 0 24 24" className="h-5 w-5">
+                                <path
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="1.75"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                                />
+                              </svg>
+                            )}
+                          </span>
+                          <span className="flex-1 text-left">
+                            Commitment only — I&rsquo;ll wire later
+                          </span>
+                          {confirmationMethod === "commitment" && (
                             <span className="text-[11px] font-semibold uppercase tracking-wider text-accent">
                               Selected
                             </span>

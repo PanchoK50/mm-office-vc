@@ -70,7 +70,7 @@ export function ClaimForm({ spotsAvailable }: { spotsAvailable: number }) {
         </div>
         <p className="text-lg font-medium text-fg">{result.message}</p>
         <p className="mt-2 text-sm text-muted">
-          We&rsquo;ll email you once the wire clears.
+          We&rsquo;ll be in touch shortly.
         </p>
       </div>
     );

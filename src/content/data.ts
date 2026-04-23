@@ -6,7 +6,7 @@ export const BANK_DETAILS = {
   accountHolder: "Stiftung Thomas Kirchner Bildungsförderungs gGmbH",
   iban: "DE46 3003 0900 1050 6926 21",
   bic: "MEFIDEMM300",
-  reference: "Spende Manage and More Büro",
+  reference: "Sponsoring Manage and More Büro",
 };
 
 type JoinerProfile = { kind: "profile"; url: string };

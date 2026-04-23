@@ -24,6 +24,7 @@ export async function submitClaim(
     (formData.get("fund_name") as string | null)?.trim() || null;
   const file = formData.get("file") as File | null;
   const viaWhatsapp = formData.get("via_whatsapp") === "true";
+  const commitmentOnly = formData.get("commitment_only") === "true";
 
   if (!name || !email || !phone || !fundName) {
     return {
@@ -34,10 +35,10 @@ export async function submitClaim(
 
   const hasFile = file && file.size > 0;
 
-  if (!hasFile && !viaWhatsapp) {
+  if (!hasFile && !viaWhatsapp && !commitmentOnly) {
     return {
       ok: false,
-      error: "Please upload a payment confirmation or select the WhatsApp option.",
+      error: "Please choose a confirmation method or select commitment only.",
     };
   }
 
@@ -99,6 +100,8 @@ export async function submitClaim(
 
   return {
     ok: true,
-    message: "Your spot is reserved. We'll confirm within 24 hours.",
+    message: commitmentOnly
+      ? "Your commitment is recorded. We'll be in touch about next steps."
+      : "Your spot is reserved. We'll confirm within 24 hours.",
   };
 }
