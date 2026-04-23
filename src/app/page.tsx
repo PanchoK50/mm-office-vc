@@ -617,7 +617,7 @@ export default async function Home() {
               <br className="hidden sm:block" />{" "}
               <span className="text-muted">Spend 7.5k on a sponsored dinner</span>
               <br className="hidden sm:block" />{" "}
-              or gain access to <span className="text-accent">Munich&apos;s hottest</span> new incubation space.
+              or gain access to <span className="text-accent">Munich&apos;s hottest</span> new startup space.
             </blockquote>
           </div>
         </section>
