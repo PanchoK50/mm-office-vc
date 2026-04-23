@@ -100,7 +100,7 @@ export default async function Home() {
 
   const benefits = [
     {
-      title: "Brand one of our Incubation Rooms",
+      title: "Brand one of our Startup Rooms",
       body: (
         <>A dedicated room named after your fund for twelve months, where our top startups build every day.</>
       ),
