@@ -62,10 +62,17 @@ async function getSpots(): Promise<Spot[]> {
     );
   }
 
-  return spotRows.map((s) => ({
+  const spots: Spot[] = spotRows.map((s) => ({
     status: s.status as SpotStatus,
     fundName: s.claim_id ? fundByClaimId.get(s.claim_id as string) ?? null : null,
   }));
+
+  const firstReserved = spots.find((s) => s.status === "reserved");
+  if (firstReserved) {
+    firstReserved.logoUrl = "/UVC_Bildmarke_Signet_Web_color_pos_300dpi.png";
+  }
+
+  return spots;
 }
 
 type OfficeDonation = {

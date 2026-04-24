@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SPACES_TOTAL } from "@/content/data";
 
 export type SpotStatus = "open" | "reserved" | "confirmed";
@@ -5,6 +6,7 @@ export type SpotStatus = "open" | "reserved" | "confirmed";
 export type Spot = {
   status: SpotStatus;
   fundName: string | null;
+  logoUrl?: string;
 };
 
 export function SpaceCounter({
@@ -37,7 +39,15 @@ export function SpaceCounter({
               aria-label={`Space ${i + 1} ${statusLabel(spot.status).toLowerCase()}${spot.fundName ? ` — ${spot.fundName}` : ""}`}
               className={`relative flex aspect-[4/3] flex-col items-center justify-center gap-1 rounded-lg border p-2 text-center ${statusStyle(spot.status)}`}
             >
-              {showFundOnly ? (
+              {spot.logoUrl ? (
+                <Image
+                  src={spot.logoUrl}
+                  alt={spot.fundName ?? "Logo"}
+                  width={80}
+                  height={60}
+                  className="max-h-[60%] w-auto object-contain"
+                />
+              ) : showFundOnly ? (
                 <span
                   className="line-clamp-3 max-w-full break-words text-[12px] font-medium leading-tight text-fg"
                   title={spot.fundName!}
