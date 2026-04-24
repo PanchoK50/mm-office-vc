@@ -70,6 +70,7 @@ async function getSpots(): Promise<Spot[]> {
   const firstReserved = spots.find((s) => s.status === "reserved");
   if (firstReserved) {
     firstReserved.logoUrl = "/UVC_Bildmarke_Signet_Web_color_pos_300dpi.png";
+    firstReserved.websiteUrl = "https://www.uvcpartners.com/";
   }
 
   return spots;

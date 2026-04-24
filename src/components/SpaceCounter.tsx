@@ -7,6 +7,7 @@ export type Spot = {
   status: SpotStatus;
   fundName: string | null;
   logoUrl?: string;
+  websiteUrl?: string;
 };
 
 export function SpaceCounter({
@@ -37,16 +38,34 @@ export function SpaceCounter({
               key={i}
               role="listitem"
               aria-label={`Space ${i + 1} ${statusLabel(spot.status).toLowerCase()}${spot.fundName ? ` — ${spot.fundName}` : ""}`}
-              className={`relative flex aspect-[4/3] flex-col items-center justify-center gap-1 rounded-lg border p-2 text-center ${statusStyle(spot.status)}`}
+              className={`relative flex aspect-[4/3] flex-col items-center justify-center gap-1 rounded-lg border text-center ${spot.logoUrl ? "p-0" : "p-2"} ${statusStyle(spot.status)}`}
             >
               {spot.logoUrl ? (
-                <Image
-                  src={spot.logoUrl}
-                  alt={spot.fundName ?? "Logo"}
-                  width={80}
-                  height={60}
-                  className="max-h-[60%] w-auto object-contain"
-                />
+                spot.websiteUrl ? (
+                  <a
+                    href={spot.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${spot.fundName ?? "fund"} website`}
+                    className="flex h-full w-full items-center justify-center rounded-md transition hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 focus-visible:ring-offset-bg"
+                  >
+                    <Image
+                      src={spot.logoUrl}
+                      alt={spot.fundName ?? "Logo"}
+                      width={240}
+                      height={180}
+                      className="h-full w-full object-contain"
+                    />
+                  </a>
+                ) : (
+                  <Image
+                    src={spot.logoUrl}
+                    alt={spot.fundName ?? "Logo"}
+                    width={240}
+                    height={180}
+                    className="h-full w-full object-contain"
+                  />
+                )
               ) : showFundOnly ? (
                 <span
                   className="line-clamp-3 max-w-full break-words text-[12px] font-medium leading-tight text-fg"
