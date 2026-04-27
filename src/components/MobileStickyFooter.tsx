@@ -2,11 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function MobileStickyFooter({
-  spotsAvailable,
-}: {
-  spotsAvailable: number;
-}) {
+export function MobileStickyFooter() {
   const [visible, setVisible] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -28,10 +24,6 @@ export function MobileStickyFooter({
   if (isDesktop) return null;
 
   const hidden = !visible;
-  const label =
-    spotsAvailable === 0
-      ? "All spots taken"
-      : `${spotsAvailable} ${spotsAvailable === 1 ? "ticket" : "tickets"} left`;
 
   return (
     <div
@@ -49,19 +41,15 @@ export function MobileStickyFooter({
               aria-hidden="true"
               className="inline-block h-2 w-2 shrink-0 rounded-full bg-[#00a2cc] shadow-[0_0_8px_2px_rgba(0,162,204,0.4)]"
             />
-            {label}
+            Reach out — we&rsquo;re picking up.
           </span>
 
-          <button
-            type="button"
-            disabled={spotsAvailable === 0}
-            onClick={() =>
-              window.dispatchEvent(new CustomEvent("open-reserve-dialog"))
-            }
-            className="shrink-0 rounded-md bg-[#00a2cc] px-4 py-2.5 text-sm font-semibold text-[#0b0b0f] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+          <a
+            href="tel:+491608340629"
+            className="shrink-0 rounded-md bg-[#00a2cc] px-4 py-2.5 text-sm font-semibold text-[#0b0b0f] transition hover:brightness-110"
           >
-            {spotsAvailable === 0 ? "Sold out" : "Secure your access"}
-          </button>
+            Get in contact
+          </a>
         </div>
       </div>
     </div>

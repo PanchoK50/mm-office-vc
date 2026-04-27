@@ -1,21 +1,13 @@
 import Image from "next/image";
 import { OfficeRaisedTotal } from "@/components/OfficeRaisedTotal";
 import { OfficeRecentDonations } from "@/components/OfficeRecentDonations";
-import { ReserveDialog } from "@/components/ReserveDialog";
-import { SpaceCounter, type Spot, type SpotStatus } from "@/components/SpaceCounter";
 import { MobileStickyFooter } from "@/components/MobileStickyFooter";
 import { FloatingPaths } from "@/components/ui/background-paths";
+import { createOfficethonServerClient } from "@/lib/supabase/server";
 import {
-  createOfficethonServerClient,
-  createServerClient,
-} from "@/lib/supabase/server";
-import {
-  BANK_DETAILS,
   HACK_NATION_POST_ID,
   JOINERS,
-  PRICE_PER_SPACE,
   RECENT_WINS,
-  SPACES_TOTAL,
 } from "@/content/data";
 
 export const revalidate = 30;
@@ -24,57 +16,6 @@ export const revalidate = 30;
    (19_093.93 + 19_325.70 + 14_351.11 + 17_867.28 + 18_208.00).
    Mirrors FUNDRAISING_GOAL in the officethon repo. */
 const OFFICE_FUNDRAISING_GOAL = 104_382.03;
-
-async function getSpots(): Promise<Spot[]> {
-  const supabase = createServerClient();
-
-  const { data: spotRows, error: spotsErr } = await supabase
-    .from("spots")
-    .select("id, status, claim_id")
-    .order("id");
-
-  if (spotsErr) console.error("[getSpots] spots query failed:", spotsErr);
-
-  if (!spotRows)
-    return Array.from({ length: SPACES_TOTAL }, () => ({
-      status: "open" as const,
-      fundName: null,
-    }));
-
-  const claimIds = spotRows
-    .map((s) => s.claim_id as string | null)
-    .filter((id): id is string => !!id);
-
-  let fundByClaimId = new Map<string, string | null>();
-  if (claimIds.length > 0) {
-    const { data: claimRows, error: claimsErr } = await supabase
-      .from("claims")
-      .select("id, fund_name")
-      .in("id", claimIds);
-
-    if (claimsErr) console.error("[getSpots] claims query failed:", claimsErr);
-
-    fundByClaimId = new Map(
-      (claimRows ?? []).map((c) => [
-        c.id as string,
-        (c.fund_name as string | null) ?? null,
-      ]),
-    );
-  }
-
-  const spots: Spot[] = spotRows.map((s) => ({
-    status: s.status as SpotStatus,
-    fundName: s.claim_id ? fundByClaimId.get(s.claim_id as string) ?? null : null,
-  }));
-
-  const firstReserved = spots.find((s) => s.status === "reserved");
-  if (firstReserved) {
-    firstReserved.logoUrl = "/UVC_Bildmarke_Signet_Web_color_pos_300dpi.png";
-    firstReserved.websiteUrl = "https://www.uvcpartners.com/";
-  }
-
-  return spots;
-}
 
 type OfficeDonation = {
   id: number;
@@ -101,10 +42,7 @@ async function getOfficeDonations(): Promise<{
 }
 
 export default async function Home() {
-  const [spots, office] = await Promise.all([getSpots(), getOfficeDonations()]);
-  const spotsAvailable = spots.filter((s) => s.status === "open").length;
-
-  const price = PRICE_PER_SPACE.toLocaleString("de-DE");
+  const office = await getOfficeDonations();
 
   const benefits = [
     {
@@ -212,32 +150,11 @@ export default async function Home() {
               className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"
             />
             <h2 className="text-balance text-[26px] font-medium leading-[1.1] tracking-[-0.02em] text-fg sm:text-[28px]">
-              {spotsWord(spotsAvailable)} {spotsAvailable === 1 ? "ticket" : "tickets"} left.{" "}
-              <span className="text-muted">
-                <br />
-                {spotsWord(spotsAvailable)} {spotsAvailable === 1 ? "Gateway" : "Gateways"} to our Community.
-              </span>
+              A Gateway to our Community.
             </h2>
-
-            <div className="mt-6 flex items-baseline gap-2">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">
-                €
-              </span>
-              <span className="text-[44px] font-medium leading-none tracking-[-0.03em] text-fg sm:text-5xl">
-                {price}
-              </span>
-              <span className="text-sm text-muted">/ year</span>
-            </div>
-        
           </div>
 
-          <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
-            <SpaceCounter spots={spots} compact />
-          </div>
-
-          <div className="px-7 pb-6 sm:px-9 sm:pb-7">
-            <ReserveDialog spotsAvailable={spotsAvailable} price={price} />
-          </div>
+      
 
           {/* ——— Officethon module ——— */}
           <div className="border-t-4 border-hairline-strong px-7 pt-6 sm:px-9 sm:pt-7">
@@ -257,38 +174,6 @@ export default async function Home() {
               <OfficeRecentDonations donations={office.recent} />
             </div>
           ) : null}
-
-          <div className="border-t border-hairline px-7 py-6 sm:px-9 sm:py-7">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-              Bank details
-            </p>
-            <dl className="mt-4 space-y-3 text-sm">
-              <div>
-                <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
-                  Account holder
-                </dt>
-                <dd className="mt-1 text-fg">{BANK_DETAILS.accountHolder}</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
-                  IBAN
-                </dt>
-                <dd className="mt-1 font-mono text-fg">{BANK_DETAILS.iban}</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
-                  BIC
-                </dt>
-                <dd className="mt-1 font-mono text-fg">{BANK_DETAILS.bic}</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] uppercase tracking-[0.14em] text-muted">
-                  Reference
-                </dt>
-                <dd className="mt-1 text-fg">{BANK_DETAILS.reference}</dd>
-              </div>
-            </dl>
-          </div>
         </aside>
 
         {/* ——— What you get ——— */}
@@ -607,26 +492,10 @@ export default async function Home() {
                     aria-hidden="true"
                     className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(13,13,16,0.85)_0%,transparent_18%,transparent_100%)] hidden lg:block"
                   />
-                  <div className="pointer-events-none absolute left-6 top-6 flex items-center gap-2 rounded-full border border-hairline-strong bg-bg/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-fg backdrop-blur">
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_12px_2px_var(--accent)]" />
-                    48.1509° N · 11.5584° E
-                  </div>
+                  
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* ——— Access pull-quote ——— */}
-        <section className="px-6 py-28 sm:py-36">
-          <div className="mx-auto w-full max-w-5xl">
-            <blockquote className="text-balance text-[clamp(2rem,5.5vw,4.5rem)] font-medium leading-[1] tracking-[-0.03em] text-fg">
-              It&apos;s your choice.
-              <br className="hidden sm:block" />{" "}
-              <span className="text-muted">Spend 7.5k on a sponsored dinner</span>
-              <br className="hidden sm:block" />{" "}
-              or gain access to <span className="text-accent">Munich&apos;s hottest</span> new startup space.
-            </blockquote>
           </div>
         </section>
 
@@ -678,7 +547,7 @@ export default async function Home() {
         </footer>
       </main>
 
-      <MobileStickyFooter spotsAvailable={spotsAvailable} />
+      <MobileStickyFooter />
     </>
   );
 }
@@ -718,11 +587,6 @@ function LinkedInPost({ postId, title }: { postId: string; title: string }) {
       className="block h-[540px] w-full rounded-xl border border-hairline bg-surface-2"
     />
   );
-}
-
-function spotsWord(n: number): string {
-  const words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
-  return words[n] ?? String(n);
 }
 
 function Dot() {
